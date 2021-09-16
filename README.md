@@ -2,7 +2,7 @@
 
 Plataforma donde los desarrolladores de videojuegos pueden contratar personas para recibir feedback y reseñas constructivas
 
-![Screenshot (1142)](https://user-images.githubusercontent.com/52842507/133534005-ad9e69b4-a491-4487-9253-95fc89659c78.png)
+![Screenshot (1144)](https://user-images.githubusercontent.com/52842507/133537629-61ee07c4-b04e-49af-9aa4-adde73850aee.png)
 
 ## ¿QUIÉNES SOMOS?
 
