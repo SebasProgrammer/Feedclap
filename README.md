@@ -9,7 +9,7 @@ Plataforma donde los desarrolladores de videojuegos pueden contratar personas pa
 Somos FeedClap, Inc.. Estamos conformados por estudiantes apasionados por la tecnología y el alto impacto que genera en la sociedad
 
 
-## Controls 🎮
+## Integrantes 🎮
 
 * <kbd>C</kbd>: César Mosqueira
 * <kbd>S</kbd>: Sebastián Arana
