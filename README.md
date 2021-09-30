@@ -6,7 +6,7 @@ Plataforma donde los desarrolladores de videojuegos pueden contratar personas pa
 
 ## ¿QUIÉNES SOMOS?
 
-Somos FeedClap, Inc.. Estamos conformados por estudiantes apasionados por la tecnología y el alto impacto que genera en la sociedad
+Somos FeedClap, Inc.. Estamos conformados por estudiantes apasionados por la tecnología y el alto impacto que genera en la sociedad.
 
 
 ## Integrantes 🎮
