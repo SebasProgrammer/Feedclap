@@ -28,6 +28,6 @@ public class Developer{
 
     ////////////////////
 
-    @OneToMany(mappedBy = "game_developer")
+    @OneToMany(mappedBy = "Videogame")
     private List<Videogame> gameList;
 }
