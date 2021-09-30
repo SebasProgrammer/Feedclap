@@ -17,6 +17,9 @@
 		<java.version>11</java.version>
 		<repackage.classifier/>
 		<spring-native.version>0.10.3</spring-native.version>
+        <flyway.user>feedclap</flyway.user>
+        <flyway.password>admin</flyway.password>
+        <flyway.schemas>feedclapdb</flyway.schemas>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -113,6 +116,18 @@
 							<BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
 						</env>
 					</image>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>4.0.3</version> 
+				<configuration>
+					<user>feedclap</user>
+					<password>admin</password>
+					<schemas>
+						<schema>feedclapdb</schema>
+					</schemas>
 				</configuration>
 			</plugin>
 			<plugin>
