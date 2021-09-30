@@ -1,5 +1,7 @@
 package xyz.feedclap.entities;
 
+
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -24,13 +26,13 @@ public class Reviewer{
     private Integer followers;
 
     @Column(name="puntos")
-    private Int puntos;
+    private Integer puntos;
 
     @Column(name="nivel")
-    private Int nivel;
+    private Integer nivel;
 
     @Column(name="tipoReviewer")
-    private Int tipoReviewer;
+    private Integer tipoReviewer;
 
     ////////////////////
 

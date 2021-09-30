@@ -17,6 +17,4 @@ public class FeedclapResponse<T> {
 		this.message = message;
 		this.data = data;
 	}
-
-
 }
