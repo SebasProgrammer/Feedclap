@@ -1,5 +1,6 @@
 package xyz.feedclap.theclaps.Services;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,6 +39,10 @@ public class UserService {
 
 	public void deleteUser(Long id) {
 		userRepository.deleteById(id);
+	}
+
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
 	}
 
 	public Optional<User> findUser(Long id) {
