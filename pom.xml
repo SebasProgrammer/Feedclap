@@ -14,7 +14,9 @@
 	<name>theclaps</name>
 	<description>REST API for Feedclap service</description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>11</java.version>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
