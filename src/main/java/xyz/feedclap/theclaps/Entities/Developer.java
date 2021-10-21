@@ -1,24 +1,32 @@
 package xyz.feedclap.theclaps.Entities;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Entity
+@Table(name = "developers")
+@NoArgsConstructor
 public class Developer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long developerId;
+	@Column(name = "user_id")
+	private Long id;
+
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "user_id")
+	private User user;
+
 	private int rating;
-
-	// List<Videogame> videogames
-	// List<User> followers
-
-	@ManyToOne
-	@JoinColumn(name = "id")
-	private User user_id;
+	// @TODO
+	// followers list reference
+	// videogame list reference
 }
