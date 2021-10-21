@@ -7,12 +7,11 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class JuegoRequest {
-    private Long id;
-    @NotBlank
-    @NotNull
-    private String nombre;
-    @NotBlank
-    @NotNull
-    private String descripcion;
+	@NotBlank
+	@NotNull
+	private String nombre;
+	@NotBlank
+	@NotNull
+	private String descripcion;
 
 }

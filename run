@@ -1,0 +1,2 @@
+tcp -k 8080/tcp
+./mvnw spring-boot:run

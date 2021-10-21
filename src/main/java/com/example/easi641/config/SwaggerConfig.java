@@ -12,28 +12,19 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
+//http://localhost:8080/swagger-ui.html
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    @Bean
-    public Docket apiDocket() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build().apiInfo(getApiInfo());
-    }
+	@Bean
+	public Docket apiDocket() {
+		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any()).build().apiInfo(getApiInfo());
+	}
 
-    private ApiInfo getApiInfo() {
-        return new ApiInfo(
-                "Order Service API",
-                "This API provides all methods required for order management",
-                "1.0",
-                "TERMS OF SERVICE URL",
-                new Contact("HampCode", "https://github.com/gitHAMP", "devacademyweb@gmail.com"),
-                "LICENSE",
-                "LICENSE URL",
-                Collections.emptyList()
-        );
-    }
+	private ApiInfo getApiInfo() {
+		return new ApiInfo("Order Service API", "This API provides all methods required for order management", "1.0",
+				"TERMS OF SERVICE URL", new Contact("Feedclap", "feedclap.xyz", "contact@feedclap.xyz"), "LICENSE",
+				"LICENSE URL", Collections.emptyList());
+	}
 }
