@@ -59,4 +59,14 @@ public class EntityDtoConverter {
                 .map(this::convertProyectoToDto)
                 .collect(Collectors.toList());
     }
+
+    public UserDto convertUserToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
+
+    public List<UserDto> convertUserToDto(List<User> users) {
+        return users.stream()// Stream<User>
+                .map(this::convertUserToDto)// Stream<UserDto>
+                .collect(Collectors.toList());// List<UserDto>
+    }
 }
