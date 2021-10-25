@@ -16,38 +16,38 @@ import java.util.List;
 @RequestMapping("/desarrolladores")
 public class DesarrolladorController {
 
-    private final EntityDtoConverter entityDtoConverter;
+	private final EntityDtoConverter entityDtoConverter;
 
-    private final DesarrolladorService desarrolladorService;
+	private final DesarrolladorService desarrolladorService;
 
+	public DesarrolladorController(DesarrolladorService desarrolladorService, EntityDtoConverter entityDtoConverter) {
+		this.desarrolladorService = desarrolladorService;
+		this.entityDtoConverter = entityDtoConverter;
+	}
 
-    public DesarrolladorController(DesarrolladorService desarrolladorService, EntityDtoConverter entityDtoConverter) {
-        this.desarrolladorService = desarrolladorService;
-        this.entityDtoConverter = entityDtoConverter;
-    }
+	@PostMapping
+	public ResponseEntity<DesarrolladorDto> createDesarrollador(@Valid @RequestBody DesarrolladorDto desarrolladorDto) {
+		Desarrollador desarrollador = desarrolladorService.createDesarrollador(desarrolladorDto);
+		return new ResponseEntity<>(entityDtoConverter.convertDesarrolladorToDto(desarrollador), HttpStatus.CREATED);
+	}
 
-    @PostMapping
-    public ResponseEntity<DesarrolladorDto> createDesarrollador(@Valid @RequestBody DesarrolladorDto desarrolladorDto){
-        Desarrollador desarrollador = desarrolladorService.createDesarrollador(desarrolladorDto);
-        return new ResponseEntity<>(entityDtoConverter.convertDesarrolladorToDto(desarrollador), HttpStatus.CREATED);
-    }
+	@GetMapping
+	public ResponseEntity<List<DesarrolladorDto>> findAllDesarrolladores() {
+		List<Desarrollador> desarrolladores = desarrolladorService.findAllDesarrolladores();
+		return new ResponseEntity<>(entityDtoConverter.convertDesarrolladorToDto(desarrolladores), HttpStatus.OK);
+	}
 
-    @GetMapping
-    public ResponseEntity<List<DesarrolladorDto>> findAllDesarrolladores(){
-        List<Desarrollador> desarrolladores = desarrolladorService.findAllDesarrolladores();
-        return new ResponseEntity<>(entityDtoConverter.convertDesarrolladorToDto(desarrolladores), HttpStatus.OK);
-    }
+	// @PutMapping("/{desarrolladorId}")
+	// public ResponseEntity<JuegoResponse> popGame(@PathVariable Long
+	// desarrolladorId) {
+	// desarrolladorService.deleteDesarrollador(desarrolladorId);
+	// return new ResponseEntity<>(HttpStatus.OK);
+	// }
 
-    @DeleteMapping("/{desarrolladorId}")
-    public ResponseEntity<JuegoResponse> popGame(@PathVariable Long desarrolladorId){
-        desarrolladorService.deleteDesarrollador(desarrolladorId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/proyecto")
-    public ResponseEntity<ProyectoDto> createProyecto(@Valid @RequestBody ProyectoDto proyectoDto){
-        Proyecto proyecto = desarrolladorService.createProyecto(proyectoDto);
-        return new ResponseEntity<>(entityDtoConverter.convertProyectoToDto(proyecto), HttpStatus.CREATED);
-    }
+	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/proyecto")
+	public ResponseEntity<ProyectoDto> createProyecto(@Valid @RequestBody ProyectoDto proyectoDto) {
+		Proyecto proyecto = desarrolladorService.createProyecto(proyectoDto);
+		return new ResponseEntity<>(entityDtoConverter.convertProyectoToDto(proyecto), HttpStatus.CREATED);
+	}
 }

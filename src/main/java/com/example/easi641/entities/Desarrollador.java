@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,19 +15,16 @@ import java.util.List;
 @Entity
 @Table(name = "desarrolladores")
 public class Desarrollador {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id" , updatable = false)
-    private Long id;
+	@Id
+	@Column(name = "id", updatable = false)
+	private Long id;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
 
-    @OneToMany(
-            mappedBy = "desarrollador",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            fetch = FetchType.LAZY
-    )
-    private List<Proyecto> proyectos = new ArrayList<>();
+	@OneToMany(mappedBy = "desarrollador", cascade = { CascadeType.PERSIST,
+			CascadeType.REMOVE }, fetch = FetchType.LAZY)
+
+	private List<Proyecto> proyectos;
 
 }

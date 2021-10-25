@@ -1,5 +1,6 @@
 package com.example.easi641.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.easi641.common.DesarrolladorValidator;
@@ -8,6 +9,7 @@ import com.example.easi641.dto.ProyectoDto;
 import com.example.easi641.entities.Desarrollador;
 import com.example.easi641.entities.Juego;
 import com.example.easi641.entities.Proyecto;
+import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.DesarrolladorRepository;
@@ -40,6 +42,15 @@ public class DesarrolladorService {
 		DesarrolladorValidator.validateDesarrollador(desarrolladorDto);
 		Desarrollador desarrollador = Desarrollador.builder().nombre(desarrolladorDto.getNombre()).build();
 
+		return desarrolladorRepository.save(desarrollador);
+	}
+
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public Desarrollador createDesarrollador(User user) {
+		Desarrollador desarrollador = new Desarrollador();
+		desarrollador.setId(user.getId());
+		desarrollador.setNombre(user.getName());
+		desarrollador.setProyectos(new ArrayList<>());
 		return desarrolladorRepository.save(desarrollador);
 	}
 

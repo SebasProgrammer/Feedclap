@@ -15,36 +15,36 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public User createUser(UserDto userDto) {
-        User newUser = initUser(userDto);
-        return userRepository.save(newUser);
-    }
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public User createUser(UserDto userDto) {
+		User newUser = initUser(userDto);
+		return userRepository.save(newUser);
+	}
 
-    private User initUser(UserDto userDto) {
-        User user = new User();
-        user.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
-        user.setUsername(userDto.getUsername());
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setToken(userDto.getToken());
-        user.setBirthdate(userDto.getBirthdate());
-        user.setType(0);
-        return user;
-    }
+	private User initUser(UserDto userDto) {
+		User user = new User();
+		user.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+		user.setUsername(userDto.getUsername());
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setToken(userDto.getToken());
+		user.setBirthdate(userDto.getBirthdate());
+		user.setType(userDto.getType());
+		return user;
+	}
 
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
+	public void deleteUser(Long id) {
+		userRepository.deleteById(id);
+	}
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
+	}
 
-    public Optional<User> findUser(Long id) {
-        return userRepository.findById(id);
-    }
+	public Optional<User> findUser(Long id) {
+		return userRepository.findById(id);
+	}
 }
