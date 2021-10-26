@@ -2,7 +2,7 @@ package com.example.easi641.controller;
 
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.dto.*;
-import com.example.easi641.dto.DetalleJuegoRequest;
+import com.example.easi641.dto.DetalleJuegoDto;
 import com.example.easi641.entities.Categoria;
 import com.example.easi641.entities.DetalleJuego;
 import com.example.easi641.services.CategoriaService;
@@ -26,21 +26,21 @@ public class CategoriaController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoriaResponse> createCategoria(@Valid @RequestBody CategoriaRequest categoriaRequest){
-        Categoria categoria = categoriaService.createCategorias(categoriaRequest);
+    public ResponseEntity<CategoriaDto> createCategoria(@Valid @RequestBody CategoriaDto categoriaDto){
+        Categoria categoria = categoriaService.createCategorias(categoriaDto);
         return new ResponseEntity<>(entityDtoConverter.convertCategoriaToDto(categoria), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoriaResponse>> findAllCategorias(){
+    public ResponseEntity<List<CategoriaDto>> findAllCategorias(){
         List<Categoria> categorias = categoriaService.findAllCategorias();
         return new ResponseEntity<>(entityDtoConverter.convertCategoriaToDto(categorias), HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/credito")
-    public ResponseEntity<DetalleJuegoResponse> createCreditos(@Valid @RequestBody DetalleJuegoRequest detalleJuegoRequest){
-        DetalleJuego detalleJuego = categoriaService.createCredito(detalleJuegoRequest);
+    public ResponseEntity<DetalleJuegoDto> createCreditos(@Valid @RequestBody DetalleJuegoDto detalleJuegoDto){
+        DetalleJuego detalleJuego = categoriaService.createCredito(detalleJuegoDto);
         return new ResponseEntity<>(entityDtoConverter.convertDetalleJuegoToDto(detalleJuego), HttpStatus.CREATED);
     }
 

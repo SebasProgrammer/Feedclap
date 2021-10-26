@@ -1,8 +1,7 @@
 package com.example.easi641.controller;
 
 import com.example.easi641.common.EntityDtoConverter;
-import com.example.easi641.dto.JuegoRequest;
-import com.example.easi641.dto.JuegoResponse;
+import com.example.easi641.dto.JuegoDto;
 import com.example.easi641.entities.Juego;
 import com.example.easi641.services.JuegoService;
 import org.springframework.http.HttpStatus;
@@ -24,19 +23,19 @@ public class JuegoController {
     }
 
     @PostMapping
-    public ResponseEntity<JuegoResponse> createGame(@Valid @RequestBody JuegoRequest juegoRequest){
-        Juego juego = juegoService.createGame(juegoRequest);
+    public ResponseEntity<JuegoDto> createGame(@Valid @RequestBody JuegoDto juegoDto){
+        Juego juego = juegoService.createGame(juegoDto);
         return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juego), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<JuegoResponse>> findAllGames(){
+    public ResponseEntity<List<JuegoDto>> findAllGames(){
         List<Juego> recycles = juegoService.findAllGames();
         return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(recycles), HttpStatus.OK);
     }
 
     @DeleteMapping("/{juegoId}")
-    public ResponseEntity<JuegoResponse> popGame(@PathVariable Long juegoId){
+    public ResponseEntity<JuegoDto> popGame(@PathVariable Long juegoId){
         juegoService.deleteGame(juegoId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

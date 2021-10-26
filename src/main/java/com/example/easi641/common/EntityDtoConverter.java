@@ -16,30 +16,30 @@ public class EntityDtoConverter {
 		this.modelMapper = modelMapper;
 	}
 
-	public JuegoResponse convertJuegoToDto(Juego juego) {
-		return modelMapper.map(juego, JuegoResponse.class);
+	public JuegoDto convertJuegoToDto(Juego juego) {
+		return modelMapper.map(juego, JuegoDto.class);
 	}
 
 	// public Juego convertEntityToDto(JuegoRequest juegoRequest){
 	// return modelMapper.map(juegoRequest, Juego.class);
 	// }
 
-	public List<JuegoResponse> convertJuegoToDto(List<Juego> juegos) {
+	public List<JuegoDto> convertJuegoToDto(List<Juego> juegos) {
 		return juegos.stream().map(this::convertJuegoToDto) // igual a this::converEntutyToDto
 				.collect(Collectors.toList());
 	}
 
-	public CategoriaResponse convertCategoriaToDto(Categoria categoria) {
-		return modelMapper.map(categoria, CategoriaResponse.class);
+	public CategoriaDto convertCategoriaToDto(Categoria categoria) {
+		return modelMapper.map(categoria, CategoriaDto.class);
 	}
 
-	public List<CategoriaResponse> convertCategoriaToDto(List<Categoria> canciones) {
+	public List<CategoriaDto> convertCategoriaToDto(List<Categoria> canciones) {
 		return canciones.stream().map(this::convertCategoriaToDto) // igual a this::converEntutyToDto
 				.collect(Collectors.toList());
 	}
 
-	public DetalleJuegoResponse convertDetalleJuegoToDto(DetalleJuego detalleJuego) {
-		return modelMapper.map(detalleJuego, DetalleJuegoResponse.class);
+	public DetalleJuegoDto convertDetalleJuegoToDto(DetalleJuego detalleJuego) {
+		return modelMapper.map(detalleJuego, DetalleJuegoDto.class);
 	}
 
 	public DesarrolladorDto convertDesarrolladorToDto(Desarrollador desarrollador) {

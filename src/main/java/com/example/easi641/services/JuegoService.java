@@ -1,7 +1,7 @@
 package com.example.easi641.services;
 
 import com.example.easi641.common.JuegoValidator;
-import com.example.easi641.dto.JuegoRequest;
+import com.example.easi641.dto.JuegoDto;
 import com.example.easi641.entities.Juego;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
@@ -22,11 +22,11 @@ public class JuegoService {
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public Juego createGame(JuegoRequest juegoRequest){
-        JuegoValidator.validateGame(juegoRequest);
+    public Juego createGame(JuegoDto juegoDto){
+        JuegoValidator.validateGame(juegoDto);
         Juego juego = Juego.builder()
-                .nombre(juegoRequest.getNombre())
-                .descripcion(juegoRequest.getDescripcion())
+                .nombre(juegoDto.getNombre())
+                .descripcion(juegoDto.getDescripcion())
                 .build();
 
         return juegoRepository.save(juego);

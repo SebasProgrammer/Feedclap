@@ -1,8 +1,8 @@
 package com.example.easi641.services;
 
 import com.example.easi641.common.CategoriaValidator;
-import com.example.easi641.dto.CategoriaRequest;
-import com.example.easi641.dto.DetalleJuegoRequest;
+import com.example.easi641.dto.CategoriaDto;
+import com.example.easi641.dto.DetalleJuegoDto;
 import com.example.easi641.entities.Categoria;
 import com.example.easi641.entities.DetalleJuego;
 import com.example.easi641.entities.Juego;
@@ -30,10 +30,10 @@ public class CategoriaService {
     private JuegoRepository juegoRepository;
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public Categoria createCategorias(CategoriaRequest categoriaRequest){
-        CategoriaValidator.validateCategoria(categoriaRequest);
+    public Categoria createCategorias(CategoriaDto categoriaDto){
+        CategoriaValidator.validateCategoria(categoriaDto);
         Categoria categoria = new Categoria();
-        categoria.setNombre(categoriaRequest.getNombre());
+        categoria.setNombre(categoriaDto.getNombre());
 
         return categoriaRepository.save(categoria);
     }
@@ -45,11 +45,11 @@ public class CategoriaService {
 
 
     @Transactional
-    public DetalleJuego createCredito(DetalleJuegoRequest detalleJuegoRequest) {
-        Juego juego = juegoRepository.findById(detalleJuegoRequest.getJuegoId())
+    public DetalleJuego createCredito(DetalleJuegoDto detalleJuegoDto) {
+        Juego juego = juegoRepository.findById(detalleJuegoDto.getJuegoId())
                 .orElseThrow(() -> new NotFoundException("Game not found."));
 
-        Categoria categoria = categoriaRepository.findById(detalleJuegoRequest.getCategoriaId())
+        Categoria categoria = categoriaRepository.findById(detalleJuegoDto.getCategoriaId())
                 .orElseThrow(() -> new NotFoundException("Categoria not found."));
 
         DetalleJuego detalleJuego = new DetalleJuego();

@@ -6,8 +6,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CategoriaRequest {
-    @NotBlank
-    @NotNull
-    private String nombre;
+public class JuegoDto {
+	private Long id;
+	@NotBlank
+	@NotNull
+	private String nombre;
+	@NotBlank
+	@NotNull
+	private String descripcion;
+
 }
