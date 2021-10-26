@@ -27,4 +27,7 @@ public class Desarrollador {
 
 	private List<Proyecto> proyectos;
 
+	@Column(name = "rating", nullable = false)
+	private float rating;
+
 }

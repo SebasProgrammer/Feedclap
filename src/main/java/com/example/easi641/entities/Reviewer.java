@@ -6,26 +6,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "juegos")
-public class Juego {
+@Table(name = "reviewers")
+public class Reviewer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false)
 	private Long id;
 
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 
-	@Column(name = "descripcion", nullable = false)
-	private String descripcion;
+	@Column(name = "rating", nullable = false)
+	private float rating;
 
-	@OneToMany(mappedBy = "juego", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-	private List<DetalleJuego> detalleJuegos; // = new ArrayList<>();
+	// List<Reviews>
+	// @OneToMany(mappedBy = "desarrollador", cascade = { CascadeType.PERSIST,
+	// CascadeType.REMOVE }, fetch = FetchType.LAZY)
+
+	// private List<Proyecto> proyectos;
 }

@@ -3,7 +3,7 @@ package com.example.easi641.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.easi641.common.DesarrolladorValidator;
+import com.example.easi641.common.UserValidator;
 import com.example.easi641.dto.DesarrolladorDto;
 import com.example.easi641.dto.ProyectoDto;
 import com.example.easi641.entities.Desarrollador;
@@ -39,7 +39,7 @@ public class DesarrolladorService {
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Desarrollador createDesarrollador(DesarrolladorDto desarrolladorDto) {
-		DesarrolladorValidator.validateDesarrollador(desarrolladorDto);
+		UserValidator.validateDesarrollador(desarrolladorDto);
 		Desarrollador desarrollador = Desarrollador.builder().nombre(desarrolladorDto.getNombre()).build();
 
 		return desarrolladorRepository.save(desarrollador);
@@ -51,6 +51,7 @@ public class DesarrolladorService {
 		desarrollador.setId(user.getId());
 		desarrollador.setNombre(user.getName());
 		desarrollador.setProyectos(new ArrayList<>());
+		desarrollador.setRating(2.5f);
 		return desarrolladorRepository.save(desarrollador);
 	}
 
