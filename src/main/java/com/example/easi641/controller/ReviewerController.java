@@ -25,24 +25,7 @@ public class ReviewerController {
 
 	@GetMapping
 	public ResponseEntity<List<UserDto>> findAllRevieweres() {
-		List<User> revieweres = reviewerService.findAllRevieweresAsUsers();
+		List<User> revieweres = reviewerService.findAllReviewers();
 		return new ResponseEntity<>(entityDtoConverter.convertUserToDto(revieweres), HttpStatus.OK);
 	}
-
-	// @PutMapping("/{reviewerId}")
-	// public ResponseEntity<JuegoResponse> popGame(@PathVariable Long
-	// reviewerId) {
-	// reviewerService.deleteReviewer(reviewerId);
-	// return new ResponseEntity<>(HttpStatus.OK);
-	// }
-
-	// @ResponseStatus(HttpStatus.OK)
-	// @PostMapping("/proyecto")
-	// public ResponseEntity<ProyectoDto> createProyecto(@Valid @RequestBody
-	// ProyectoDto proyectoDto) {
-	// Proyecto proyecto = reviewerService.createProyecto(proyectoDto);
-	// return new
-	// ResponseEntity<>(entityDtoConverter.convertProyectoToDto(proyecto),
-	// HttpStatus.CREATED);
-	// }
 }
