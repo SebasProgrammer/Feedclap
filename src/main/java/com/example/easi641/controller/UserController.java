@@ -4,10 +4,8 @@ import java.util.List;
 
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.common.UserType;
-import com.example.easi641.dto.ProyectoDto;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
-import com.example.easi641.entities.Proyecto;
 import com.example.easi641.entities.Review;
 import com.example.easi641.entities.User;
 import com.example.easi641.exception.FeedclapException;

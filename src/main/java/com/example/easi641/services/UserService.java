@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.example.easi641.dto.ProyectoDto;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
 import com.example.easi641.entities.*;
@@ -13,7 +12,6 @@ import com.example.easi641.exception.InternalServerErrorException;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.JuegoRepository;
 import com.example.easi641.repository.ReviewRepository;
-import com.example.easi641.repository.ReviewerRepository;
 import com.example.easi641.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

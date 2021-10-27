@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/revieweres")
+@RequestMapping("/reviewers")
 public class ReviewerController {
 
 	private final EntityDtoConverter entityDtoConverter;
