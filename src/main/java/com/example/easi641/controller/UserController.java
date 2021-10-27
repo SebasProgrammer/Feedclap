@@ -78,4 +78,15 @@ public class UserController {
 		Review review = userService.createReview(reviewDto);
 		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(review), HttpStatus.CREATED);
 	}
+
+	@GetMapping("/login")
+	public ResponseEntity<String> loginUser(@RequestBody UserDto userDto) throws FeedclapException {
+		Boolean estado = userService.loginUser(userDto);
+
+		if (estado==true) {
+			return new ResponseEntity<>(" login correcto ", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(" login incorrecto ", HttpStatus.OK);
+		}
+	}
 }

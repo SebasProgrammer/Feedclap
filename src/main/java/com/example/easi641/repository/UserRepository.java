@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+	@Query(value = "SELECT u.token FROM users u WHERE u.username = :usernamee", nativeQuery = true)
+	String passswordofuser(String usernamee);
+
 	@Query(value = "SELECT count(*) as 'count' FROM users u WHERE u.username = ?1", nativeQuery = true)
 	Long countUsername(String username);
 

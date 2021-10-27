@@ -81,4 +81,22 @@ public class UserService {
 		review.setPuntaje(reviewDto.getPuntaje());
 		return reviewRepository.save(review);
 	}
+
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public Boolean loginUser(UserDto userDto) throws FeedclapException {
+		if (userRepository.countUsername(userDto.getUsername()) == 1) {
+
+			String password=userRepository.passswordofuser(userDto.getUsername());
+
+			if(password.equals(userDto.getToken())){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
+	}
 }

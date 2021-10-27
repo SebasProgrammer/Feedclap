@@ -1,6 +1,7 @@
 package com.example.easi641.dto;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
