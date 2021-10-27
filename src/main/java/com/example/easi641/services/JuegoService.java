@@ -5,9 +5,7 @@ import com.example.easi641.dto.JuegoDto;
 import com.example.easi641.entities.Juego;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
-import com.example.easi641.repository.CategoriaRepository;
-import com.example.easi641.repository.DetalleJuegoRepository;
-import com.example.easi641.repository.JuegoRepository;
+import com.example.easi641.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -19,6 +17,12 @@ import java.util.List;
 
 @Service
 public class JuegoService {
+    @Autowired
+    private GeneroJuegoRepository generoJuegoRepository;
+
+    @Autowired
+    private GeneroRepository generoRepository;
+
     @Autowired
     private  JuegoRepository juegoRepository;
     @Autowired
@@ -63,6 +67,18 @@ public class JuegoService {
     public List<Juego> findforCategoria(String categoria_name){
         Long categoriaid= categoriaRepository.lista_de_juego_por_categoria(categoria_name);
         List<Long> waaa = detalleJuegoRepository.lista_de_juego_por_categoria(categoriaid);
+        List<Juego> weeee= new ArrayList<>();
+
+        for(int i = 0; i<waaa.size(); i++){
+            weeee.add(juegoRepository.getById(waaa.get(i)));
+        }
+        return weeee;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Juego> findforGenero(String genero_name){
+        Long generoId= generoRepository.lista_de_juego_por_genero(genero_name);
+        List<Long> waaa  = generoJuegoRepository.lista_juego_genero(generoId);
         List<Juego> weeee= new ArrayList<>();
 
         for(int i = 0; i<waaa.size(); i++){

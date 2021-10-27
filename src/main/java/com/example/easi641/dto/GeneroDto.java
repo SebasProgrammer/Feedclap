@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class GeneroDto {
+    private Long id;
     @NotBlank
     @NotNull
     private String nombre;

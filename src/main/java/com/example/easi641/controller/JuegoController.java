@@ -46,6 +46,12 @@ public class JuegoController {
         return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
     }
 
+    @GetMapping("/{genero}")
+    public ResponseEntity<List<JuegoDto>> findforGenero(@PathVariable String genero){
+        List<Juego> juegos = juegoService.findforGenero(genero);
+        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
+    }
+
     @GetMapping("/busqueda_avanzada/{name_game}")
     public ResponseEntity<List<JuegoDto>> findGamesNames(@PathVariable String name_game){
         List<Juego> juegos = juegoService.findGamesNames(name_game);
