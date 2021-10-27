@@ -5,6 +5,7 @@ import com.example.easi641.dto.JuegoDto;
 import com.example.easi641.entities.Juego;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
+import com.example.easi641.repository.CategoriaRepository;
 import com.example.easi641.repository.DetalleJuegoRepository;
 import com.example.easi641.repository.JuegoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class JuegoService {
     private  JuegoRepository juegoRepository;
     @Autowired
     private DetalleJuegoRepository detalleJuegoRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Juego createGame(JuegoDto juegoDto){
@@ -47,7 +50,8 @@ public class JuegoService {
     }
 
     @Transactional(readOnly = true)
-    public List<Juego> findforCategoria(Long categoriaid){
+    public List<Juego> findforCategoria(String categoria_name){
+        Long categoriaid= categoriaRepository.lista_de_juego_por_categoria(categoria_name);
         List<Long> waaa = detalleJuegoRepository.lista_de_juego_por_categoria(categoriaid);
         List<Juego> weeee= new ArrayList<>();
 
