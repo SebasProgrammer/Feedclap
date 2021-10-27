@@ -4,10 +4,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.example.easi641.dto.ProyectoDto;
+import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
-import com.example.easi641.entities.User;
+import com.example.easi641.entities.*;
 import com.example.easi641.exception.FeedclapException;
 import com.example.easi641.exception.InternalServerErrorException;
+import com.example.easi641.exception.NotFoundException;
+import com.example.easi641.repository.JuegoRepository;
+import com.example.easi641.repository.ReviewRepository;
+import com.example.easi641.repository.ReviewerRepository;
 import com.example.easi641.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +24,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
+
+	@Autowired
+	private ReviewRepository reviewRepository;
+
+	@Autowired
+	private JuegoRepository juegoRepository;
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -53,5 +66,21 @@ public class UserService {
 
 	public Optional<User> findUser(Long id) {
 		return userRepository.findById(id);
+	}
+
+	@Transactional
+	public Review createReview(ReviewDto reviewDto) {
+		User user = userRepository.findById(reviewDto.getUserId())
+				.orElseThrow(() -> new NotFoundException("Usuario not found."));
+
+		Juego juego = juegoRepository.findById(reviewDto.getJuegoId())
+				.orElseThrow(() -> new NotFoundException("Juego not found."));
+
+		Review review = new Review();
+		review.setJuego(juego);
+		review.setUser(user);
+		review.setDescripcion(reviewDto.getDescripcion());
+		review.setPuntaje(reviewDto.getPuntaje());
+		return reviewRepository.save(review);
 	}
 }
