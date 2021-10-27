@@ -91,4 +91,17 @@ public class EntityDtoConverter {
 	public List<RegistroDto> convertRegistroToDto(List<Registro> registros) {
 		return registros.stream().map(this::convertRegistroToDto).collect(Collectors.toList());
 	}
+
+	public GeneroDto convertGeneroToDto(Genero genero) {
+		return modelMapper.map(genero, GeneroDto.class);
+	}
+
+	public List<GeneroDto> convertGeneroToDto(List<Genero> canciones) {
+		return canciones.stream().map(this::convertGeneroToDto) // igual a this::converEntutyToDto
+				.collect(Collectors.toList());
+	}
+
+	public GeneroJuegoDto convertGeneroJuegoToDto(GeneroJuego generoJuego) {
+		return modelMapper.map(generoJuego, GeneroJuegoDto.class);
+	}
 }

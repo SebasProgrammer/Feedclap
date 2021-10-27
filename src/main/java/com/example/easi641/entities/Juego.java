@@ -28,4 +28,7 @@ public class Juego {
 
 	@OneToMany(mappedBy = "juego", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<DetalleJuego> detalleJuegos; // = new ArrayList<>();
+
+	@OneToMany(mappedBy = "juego", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	private List<GeneroJuego> generoJuegos; // = new ArrayList<>();
 }
