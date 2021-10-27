@@ -40,6 +40,8 @@ public class ReviewerService {
 		reviewer.setId(user.getId());
 		reviewer.setNombre(user.getName());
 		reviewer.setRating(2.5f);
+		reviewer.setNivel(0);
+		reviewer.setTipo(0); // TODO enum class
 		return reviewerRepository.save(reviewer);
 	}
 

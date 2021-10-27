@@ -2,11 +2,12 @@ package com.example.easi641.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
-import com.example.easi641.entities.*;
+import com.example.easi641.entities.Juego;
+import com.example.easi641.entities.Review;
+import com.example.easi641.entities.User;
 import com.example.easi641.exception.FeedclapException;
 import com.example.easi641.exception.InternalServerErrorException;
 import com.example.easi641.exception.NotFoundException;
@@ -34,7 +35,8 @@ public class UserService {
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User createUser(UserDto userDto) throws FeedclapException {
-		if (userRepository.countUsername(userDto.getUsername()) != 0) {
+		Long c = userRepository.countUsername(userDto.getUsername());
+		if (c != 0) {
 			throw new InternalServerErrorException("INTERNAL_SERVER_ERROR",
 					userDto.getUsername() + " already in the server");
 		}
@@ -44,7 +46,6 @@ public class UserService {
 
 	private User initUser(UserDto userDto) {
 		User user = new User();
-		user.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
 		user.setUsername(userDto.getUsername());
 		user.setName(userDto.getName());
 		user.setEmail(userDto.getEmail());

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.easi641.EaSi641ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.401 s - in com.example.easi641.EaSi641ApplicationTests

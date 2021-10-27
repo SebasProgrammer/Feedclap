@@ -8,18 +8,19 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "reviewers")
 public class Reviewer {
 	@Id
 	@Column(name = "id", updatable = false)
 	private Long id;
 
+	@Builder.Default
 	@Column(name = "nombre", nullable = false)
-	private String nombre;
+	private String nombre = "John Doe";
 
 	@Column(name = "rating", nullable = false)
 	private float rating;

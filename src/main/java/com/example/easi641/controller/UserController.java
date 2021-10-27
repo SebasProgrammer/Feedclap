@@ -50,6 +50,7 @@ public class UserController {
 		} else {
 			throw new InternalServerErrorException("INTERNAL_SERVER_ERROR", "UNDEFINED TYPE");
 		}
+
 		return new ResponseEntity<>(
 				user.getUsername() + " has been saved as type " + UserType.parseType(user.getType()), HttpStatus.OK);
 	}
