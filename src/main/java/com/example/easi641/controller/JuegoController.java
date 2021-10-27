@@ -45,4 +45,15 @@ public class JuegoController {
         List<Juego> juegos = juegoService.findforCategoria(categoria);
         return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
     }
+
+    @GetMapping("/busqueda_avanzada/{name_game}")
+    public ResponseEntity<List<JuegoDto>> findGamesNames(@PathVariable String name_game){
+        List<Juego> juegos = juegoService.findGamesNames(name_game);
+        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
+    }
+
+    @GetMapping("/descripcion/{nombre_videojuego}")
+    public ResponseEntity<String> description_Game(@PathVariable String nombre_videojuego){
+        return new ResponseEntity<>(juegoService.descipcion_Game(nombre_videojuego), HttpStatus.OK);
+    }
 }

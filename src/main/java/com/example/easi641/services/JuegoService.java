@@ -42,6 +42,16 @@ public class JuegoService {
         return juegoRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public List<Juego> findGamesNames(String name_game){
+        return juegoRepository.gamesnamessimilar(name_game);
+    }
+
+    @Transactional(readOnly = true)
+    public String descipcion_Game(String nombre_videojuego){
+        return juegoRepository.gamename(nombre_videojuego);
+    }
+
     @Transactional
     public void deleteGame(Long juegoId){
         Juego juego = juegoRepository.findById(juegoId)
