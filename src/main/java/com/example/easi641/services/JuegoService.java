@@ -5,21 +5,23 @@ import com.example.easi641.dto.JuegoDto;
 import com.example.easi641.entities.Juego;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
+import com.example.easi641.repository.DetalleJuegoRepository;
 import com.example.easi641.repository.JuegoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class JuegoService {
-    private final JuegoRepository juegoRepository;
-
-    public JuegoService(JuegoRepository juegoRepository){
-        this.juegoRepository = juegoRepository;
-    }
+    @Autowired
+    private  JuegoRepository juegoRepository;
+    @Autowired
+    private DetalleJuegoRepository detalleJuegoRepository;
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Juego createGame(JuegoDto juegoDto){
@@ -42,5 +44,16 @@ public class JuegoService {
         Juego juego = juegoRepository.findById(juegoId)
                 .orElseThrow(()-> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
         juegoRepository.delete(juego);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Juego> findforCategoria(Long categoriaid){
+        List<Long> waaa = detalleJuegoRepository.lista_de_juego_por_categoria(categoriaid);
+        List<Juego> weeee= new ArrayList<>();
+
+        for(int i = 0; i<waaa.size(); i++){
+            weeee.add(juegoRepository.getById(waaa.get(i)));
+        }
+        return weeee;
     }
 }
