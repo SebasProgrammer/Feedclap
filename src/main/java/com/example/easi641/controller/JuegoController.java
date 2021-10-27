@@ -30,13 +30,19 @@ public class JuegoController {
 
     @GetMapping
     public ResponseEntity<List<JuegoDto>> findAllGames(){
-        List<Juego> recycles = juegoService.findAllGames();
-        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(recycles), HttpStatus.OK);
+        List<Juego> juegos = juegoService.findAllGames();
+        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
     }
 
     @DeleteMapping("/{juegoId}")
     public ResponseEntity<JuegoDto> popGame(@PathVariable Long juegoId){
         juegoService.deleteGame(juegoId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{categoriaid}")
+    public ResponseEntity<List<JuegoDto>> findforCategoria(@PathVariable Long categoriaid){
+        List<Juego> juegos = juegoService.findforCategoria(categoriaid);
+        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
     }
 }
