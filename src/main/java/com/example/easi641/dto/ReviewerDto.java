@@ -11,4 +11,7 @@ public class ReviewerDto {
 	@NotBlank
 	@NotNull
 	private String nombre;
+	private float rating;
+	private int nivel;
+	private int tipo;
 }
