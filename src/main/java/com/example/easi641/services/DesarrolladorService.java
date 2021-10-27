@@ -15,7 +15,9 @@ import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.DesarrolladorRepository;
 import com.example.easi641.repository.JuegoRepository;
 import com.example.easi641.repository.ProyectoRepository;
+import com.example.easi641.repository.UserRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,19 +25,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DesarrolladorService {
-	private final JuegoRepository juegoRepository;
+	@Autowired
+	private JuegoRepository juegoRepository;
 
-	private final ProyectoRepository proyectoRepository;
+	@Autowired
+	private ProyectoRepository proyectoRepository;
 
-	private final DesarrolladorRepository desarrolladorRepository;
+	@Autowired
+	private DesarrolladorRepository desarrolladorRepository;
 
-	public DesarrolladorService(DesarrolladorRepository desarrolladorRepository, ProyectoRepository proyectoRepository,
-			JuegoRepository juegoRepository) {
-		this.desarrolladorRepository = desarrolladorRepository;
-
-		this.proyectoRepository = proyectoRepository;
-		this.juegoRepository = juegoRepository;
-	}
+	@Autowired
+	private UserRepository userRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Desarrollador createDesarrollador(DesarrolladorDto desarrolladorDto) {
@@ -56,8 +56,8 @@ public class DesarrolladorService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Desarrollador> findAllDesarrolladores() {
-		return desarrolladorRepository.findAll();
+	public List<User> findAllDesarrolladores() {
+		return userRepository.getDevelopers();
 	}
 
 	@Transactional

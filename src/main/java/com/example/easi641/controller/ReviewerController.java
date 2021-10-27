@@ -2,13 +2,12 @@ package com.example.easi641.controller;
 
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.dto.*;
-import com.example.easi641.entities.Reviewer;
+import com.example.easi641.entities.User;
 import com.example.easi641.services.ReviewerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,16 +23,10 @@ public class ReviewerController {
 		this.entityDtoConverter = entityDtoConverter;
 	}
 
-	@PostMapping
-	public ResponseEntity<ReviewerDto> createReviewer(@Valid @RequestBody ReviewerDto reviewerDto) {
-		Reviewer reviewer = reviewerService.createReviewer(reviewerDto);
-		return new ResponseEntity<>(entityDtoConverter.convertReviewerToDto(reviewer), HttpStatus.CREATED);
-	}
-
 	@GetMapping
-	public ResponseEntity<List<ReviewerDto>> findAllRevieweres() {
-		List<Reviewer> revieweres = reviewerService.findAllRevieweres();
-		return new ResponseEntity<>(entityDtoConverter.convertReviewerToDto(revieweres), HttpStatus.OK);
+	public ResponseEntity<List<UserDto>> findAllRevieweres() {
+		List<User> revieweres = reviewerService.findAllRevieweresAsUsers();
+		return new ResponseEntity<>(entityDtoConverter.convertUserToDto(revieweres), HttpStatus.OK);
 	}
 
 	// @PutMapping("/{reviewerId}")

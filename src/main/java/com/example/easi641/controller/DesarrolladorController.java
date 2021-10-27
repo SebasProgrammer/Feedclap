@@ -2,8 +2,8 @@ package com.example.easi641.controller;
 
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.dto.*;
-import com.example.easi641.entities.Desarrollador;
 import com.example.easi641.entities.Proyecto;
+import com.example.easi641.entities.User;
 import com.example.easi641.services.DesarrolladorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +25,10 @@ public class DesarrolladorController {
 		this.entityDtoConverter = entityDtoConverter;
 	}
 
-	@PostMapping
-	public ResponseEntity<DesarrolladorDto> createDesarrollador(@Valid @RequestBody DesarrolladorDto desarrolladorDto) {
-		Desarrollador desarrollador = desarrolladorService.createDesarrollador(desarrolladorDto);
-		return new ResponseEntity<>(entityDtoConverter.convertDesarrolladorToDto(desarrollador), HttpStatus.CREATED);
-	}
-
 	@GetMapping
-	public ResponseEntity<List<DesarrolladorDto>> findAllDesarrolladores() {
-		List<Desarrollador> desarrolladores = desarrolladorService.findAllDesarrolladores();
-		return new ResponseEntity<>(entityDtoConverter.convertDesarrolladorToDto(desarrolladores), HttpStatus.OK);
+	public ResponseEntity<List<UserDto>> findAllDesarrolladores() {
+		List<User> desarrolladores = desarrolladorService.findAllDesarrolladores();
+		return new ResponseEntity<>(entityDtoConverter.convertUserToDto(desarrolladores), HttpStatus.OK);
 	}
 
 	// @PutMapping("/{desarrolladorId}")
