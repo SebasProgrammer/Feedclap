@@ -3,6 +3,7 @@ package com.example.easi641.controller;
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.dto.*;
 import com.example.easi641.entities.Proyecto;
+import com.example.easi641.entities.Registro;
 import com.example.easi641.entities.User;
 import com.example.easi641.services.DesarrolladorService;
 import org.springframework.http.HttpStatus;
@@ -44,4 +45,12 @@ public class DesarrolladorController {
 		Proyecto proyecto = desarrolladorService.createProyecto(proyectoDto);
 		return new ResponseEntity<>(entityDtoConverter.convertProyectoToDto(proyecto), HttpStatus.CREATED);
 	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/registro")
+	public ResponseEntity<RegistroDto> createRegistro(@Valid @RequestBody RegistroDto registroDto) {
+		Registro registro = desarrolladorService.createRegistro(registroDto);
+		return new ResponseEntity<>(entityDtoConverter.convertRegistroToDto(registro), HttpStatus.CREATED);
+	}
+
 }

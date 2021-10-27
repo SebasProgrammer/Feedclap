@@ -6,16 +6,11 @@ import java.util.List;
 import com.example.easi641.common.UserValidator;
 import com.example.easi641.dto.DesarrolladorDto;
 import com.example.easi641.dto.ProyectoDto;
-import com.example.easi641.entities.Desarrollador;
-import com.example.easi641.entities.Juego;
-import com.example.easi641.entities.Proyecto;
-import com.example.easi641.entities.User;
+import com.example.easi641.dto.RegistroDto;
+import com.example.easi641.entities.*;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
-import com.example.easi641.repository.DesarrolladorRepository;
-import com.example.easi641.repository.JuegoRepository;
-import com.example.easi641.repository.ProyectoRepository;
-import com.example.easi641.repository.UserRepository;
+import com.example.easi641.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class DesarrolladorService {
+	@Autowired
+	private ReviewerRepository reviewerRepository;
+
+	@Autowired
+	private RegistroRepository registroRepository;
+
 	@Autowired
 	private JuegoRepository juegoRepository;
 
@@ -80,5 +81,21 @@ public class DesarrolladorService {
 		proyecto.setDesarrollador(desarrollador);
 		proyecto.setPuesto(proyectoDto.getPuesto());
 		return proyectoRepository.save(proyecto);
+	}
+
+	@Transactional
+	public Registro createRegistro(RegistroDto registroDto) {
+		Desarrollador desarrollador = desarrolladorRepository.findById(registroDto.getDesarrolladorId())
+				.orElseThrow(() -> new NotFoundException("Desarrollador not found."));
+
+		Reviewer reviewer = reviewerRepository.findById(registroDto.getReviewerId())
+				.orElseThrow(() -> new NotFoundException("Reviewer not found."));
+
+		Registro registro = new Registro();
+		registro.setDesarrollador(desarrollador);
+		registro.setReviewer(reviewer);
+		registro.setMonto(registroDto.getMonto());
+		registro.setLocalDateTime(registroDto.getLocalDateTime());
+		return registroRepository.save(registro);
 	}
 }

@@ -83,4 +83,12 @@ public class EntityDtoConverter {
 	public List<ReviewDto> convertReviewToDto(List<Review> reviews) {
 		return reviews.stream().map(this::convertReviewToDto).collect(Collectors.toList());
 	}
+
+	public RegistroDto convertRegistroToDto(Registro registro) {
+		return modelMapper.map(registro, RegistroDto.class);
+	}
+
+	public List<RegistroDto> convertRegistroToDto(List<Registro> registros) {
+		return registros.stream().map(this::convertRegistroToDto).collect(Collectors.toList());
+	}
 }
