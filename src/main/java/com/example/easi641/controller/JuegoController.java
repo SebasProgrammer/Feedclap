@@ -40,9 +40,9 @@ public class JuegoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{categoriaid}")
-    public ResponseEntity<List<JuegoDto>> findforCategoria(@PathVariable Long categoriaid){
-        List<Juego> juegos = juegoService.findforCategoria(categoriaid);
+    @GetMapping("/{categoria}")
+    public ResponseEntity<List<JuegoDto>> findforCategoria(@PathVariable String categoria){
+        List<Juego> juegos = juegoService.findforCategoria(categoria);
         return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
     }
 }
