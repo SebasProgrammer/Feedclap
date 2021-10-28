@@ -21,10 +21,10 @@ public class Proyecto {
 	private String puesto;
 
 	@ManyToOne
-	@JoinColumn(name = "desarrolladores_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "desarrolladores_juegos_fk"))
-	private Desarrollador desarrollador;
+	@JoinColumn(name = "developer_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "developer_juegos_fk"))
+	private Developer developer;
 
 	@ManyToOne
-	@JoinColumn(name = "juegos_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "juegos_desarrolladores_fk"))
+	@JoinColumn(name = "juegos_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "juegos_developer_fk"))
 	private Juego juego;
 }

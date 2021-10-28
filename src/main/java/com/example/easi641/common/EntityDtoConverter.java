@@ -42,8 +42,8 @@ public class EntityDtoConverter {
 		return modelMapper.map(detailGame, DetailGameDto.class);
 	}
 
-	public DesarrolladorDto convertDesarrolladorToDto(Desarrollador desarrollador) {
-		return modelMapper.map(desarrollador, DesarrolladorDto.class);
+	public DeveloperDto convertDeveloperToDto(Developer developer) {
+		return modelMapper.map(developer, DeveloperDto.class);
 	}
 
 	public ReviewerDto convertReviewerToDto(Reviewer reviewer) {
@@ -54,8 +54,8 @@ public class EntityDtoConverter {
 		return modelMapper.map(review, ReviewDto.class);
 	}
 
-	public List<DesarrolladorDto> convertDesarrolladorToDto(List<Desarrollador> desarrolladores) {
-		return desarrolladores.stream().map(this::convertDesarrolladorToDto).collect(Collectors.toList());
+	public List<DeveloperDto> convertDeveloperToDto(List<Developer> developers) {
+		return developers.stream().map(this::convertDeveloperToDto).collect(Collectors.toList());
 	}
 
 	public List<ReviewerDto> convertReviewerToDto(List<Reviewer> reviewers) {

@@ -29,7 +29,7 @@ public class ReviewerService {
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Reviewer createReviewer(ReviewerDto reviewerDto) {
 		UserValidator.validateReviewer(reviewerDto);
-		Reviewer reviewer = Reviewer.builder().nombre(reviewerDto.getNombre()).build();
+		Reviewer reviewer = Reviewer.builder().name(reviewerDto.getName()).build();
 
 		return reviewerRepository.save(reviewer);
 	}
@@ -38,7 +38,7 @@ public class ReviewerService {
 	public Reviewer createReviewer(User user) {
 		Reviewer reviewer = new Reviewer();
 		reviewer.setId(user.getId());
-		reviewer.setNombre(user.getName());
+		reviewer.setName(user.getName());
 		reviewer.setRating(2.5f);
 		return reviewerRepository.save(reviewer);
 	}

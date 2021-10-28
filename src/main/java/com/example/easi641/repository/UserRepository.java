@@ -12,12 +12,12 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query(value = "SELECT u.token FROM users u WHERE u.username = :usernamee", nativeQuery = true)
-	String passswordofuser(String usernamee);
+	String getToken(String usernamee);
 
 	@Query(value = "SELECT * FROM users u WHERE u.username = ?1", nativeQuery = true)
 	Optional<User> findByUsername(String username);
 
-	@Query(value = "SELECT count(*) as 'count' FROM users u WHERE u.username = ?1", nativeQuery = true)
+	@Query(value = "SELECT count(*) FROM users u WHERE u.username = ?1", nativeQuery = true)
 	Long countUsername(String username);
 
 	// "STAND_ALONE" = 0;

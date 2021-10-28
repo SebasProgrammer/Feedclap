@@ -10,7 +10,7 @@ public class ReviewerDto {
 	private Long id;
 	@NotBlank
 	@NotNull
-	private String nombre;
+	private String name;
 	private float rating;
 	private int nivel;
 	private int tipo;

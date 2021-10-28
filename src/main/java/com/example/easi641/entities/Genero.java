@@ -14,21 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Genero {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false)
+	private Long id;
 
-    @Column(name = "nombre",  nullable = false,
-            columnDefinition = "VARCHAR(50)",
-            length = 50)
-    private String nombre;
+	@Column(name = "nombre", nullable = false, columnDefinition = "VARCHAR(50)", length = 50)
+	private String nombre;
 
-    @OneToMany(
-            mappedBy = "genero",
-            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
-            fetch = FetchType.LAZY
-    )
+	@OneToMany(mappedBy = "genero", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 
-    private List<GeneroJuego> generoJuegos = new ArrayList<>();
+	private List<GeneroJuego> generoJuegos = new ArrayList<>();
 }

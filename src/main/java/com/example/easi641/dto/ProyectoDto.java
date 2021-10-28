@@ -7,9 +7,9 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class ProyectoDto {
-    private Long desarrolladorId;
-    private Long juegoId;
-    @NotBlank
-    @NotNull
-    private String puesto;
+	private Long developerId;
+	private Long juegoId;
+	@NotBlank
+	@NotNull
+	private String puesto;
 }

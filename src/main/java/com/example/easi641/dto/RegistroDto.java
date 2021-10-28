@@ -8,18 +8,18 @@ import java.time.LocalDateTime;
 
 @Data
 public class RegistroDto {
-    private Long desarrolladorId;
-    private Long reviewerId;
-    @NotBlank
-    @NotNull
-    private String descripcion;
+	private Long developerId;
+	private Long reviewerId;
+	@NotBlank
+	@NotNull
+	private String descripcion;
 
-    @NotBlank
-    @NotNull
-    private Double monto;
+	@NotBlank
+	@NotNull
+	private Double monto;
 
-    @NotBlank
-    @NotNull
-    private LocalDateTime localDateTime;
+	@NotBlank
+	@NotNull
+	private LocalDateTime localDateTime;
 
 }

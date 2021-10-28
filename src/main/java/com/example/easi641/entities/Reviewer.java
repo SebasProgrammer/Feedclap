@@ -18,8 +18,8 @@ public class Reviewer {
 	@Column(name = "id", updatable = false)
 	private Long id;
 
-	@Column(name = "nombre", nullable = false)
-	private String nombre;
+	@Column(name = "name", nullable = false)
+	private String name;
 
 	@Column(name = "rating", nullable = false)
 	private float rating;

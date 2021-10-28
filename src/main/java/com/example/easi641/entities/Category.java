@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+<<<<<<< HEAD:src/main/java/com/example/easi641/entities/Category.java
 @Table(
         name="categories"
 )
@@ -37,4 +38,21 @@ public class Category {
             fetch = FetchType.LAZY
     )
     private List<DetailGame> detailGames = new ArrayList<>();
+=======
+@Table(name = "categorias")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Categoria {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false)
+	private Long id;
+
+	@Column(name = "nombre", nullable = false, columnDefinition = "VARCHAR(50)", length = 50)
+	private String nombre;
+
+	@OneToMany(mappedBy = "categoria", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	private List<DetalleJuego> detalleJuegos = new ArrayList<>();
+>>>>>>> ae1c57804cb922af8ed60bbc2c0852a546bdc72f:src/main/java/com/example/easi641/entities/Categoria.java
 }
