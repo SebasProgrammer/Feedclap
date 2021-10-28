@@ -70,7 +70,7 @@ public class JuegoController {
 
 	@GetMapping("/proyectos/{developer}")
 	public ResponseEntity<List<JuegoDto>> findGamesforDeveloper(@PathVariable String developer) {
-		List<Juego> juegos = juegoService.findforDeveloper(developer);
+		List<Juego> juegos = juegoService.findforDesarrollador(developer);
 		return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
 	}
 

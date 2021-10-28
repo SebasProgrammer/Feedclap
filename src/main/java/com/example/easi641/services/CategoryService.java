@@ -8,7 +8,7 @@ import com.example.easi641.entities.DetailGame;
 import com.example.easi641.entities.Juego;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.CategoryRepository;
-import com.example.easi641.repository.DetalleJuegoRepository;
+import com.example.easi641.repository.DetailGameRepository;
 import com.example.easi641.repository.JuegoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private DetalleJuegoRepository detalleJuegoRepository;
+    private DetailGameRepository detailGameRepository;
 
     @Autowired
     private JuegoRepository juegoRepository;
@@ -55,6 +55,6 @@ public class CategoryService {
         DetailGame detailGame = new DetailGame();
         detailGame.setJuego(game);
         detailGame.setCategory(category);
-        return detalleJuegoRepository.save(detailGame);
+        return detailGameRepository.save(detailGame);
     }
 }

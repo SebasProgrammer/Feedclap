@@ -11,14 +11,13 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-<<<<<<< HEAD:src/main/java/com/example/easi641/entities/DetailGame.java
 public class DetailGame {
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
     @Column(
-            name="id",
+            name = "id",
             updatable = false
     )
     private Long id;
@@ -46,19 +45,4 @@ public class DetailGame {
             )
     )
     private Juego juego;
-=======
-public class DetalleJuego {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false)
-	private Long id;
-
-	@ManyToOne
-	@JoinColumn(name = "categorias_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "categorias_juegos_fk"))
-	private Categoria categoria;
-
-	@ManyToOne
-	@JoinColumn(name = "juegos_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "juegos_categorias_fk"))
-	private Juego juego;
->>>>>>> ae1c57804cb922af8ed60bbc2c0852a546bdc72f:src/main/java/com/example/easi641/entities/DetalleJuego.java
 }

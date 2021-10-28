@@ -11,5 +11,5 @@ public interface DeveloperRepository extends JpaRepository<Developer, Long> {
 	List<Developer> nameDeveloper(String name);
 
 	@Query(value = "SELECT id FROM developers d WHERE d.name=:name_developer", nativeQuery = true)
-	Long lista_de_juego_por_developer(String name_developer);
+	Long GameforDeveloper(String name_developer);
 }
