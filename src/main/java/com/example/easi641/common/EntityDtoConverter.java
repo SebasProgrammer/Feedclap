@@ -29,17 +29,17 @@ public class EntityDtoConverter {
 				.collect(Collectors.toList());
 	}
 
-	public CategoryDto convertCategoryToDto(Category category) {
-		return modelMapper.map(category, CategoryDto.class);
+	public CategoriaDto convertCategoriaToDto(Categoria categoria) {
+		return modelMapper.map(categoria, CategoriaDto.class);
 	}
 
-	public List<CategoryDto> convertCategoryToDto(List<Category> categories) {
-		return categories.stream().map(this::convertCategoryToDto) // igual a this::converEntutyToDto
+	public List<CategoriaDto> convertCategoriaToDto(List<Categoria> canciones) {
+		return canciones.stream().map(this::convertCategoriaToDto) // igual a this::converEntutyToDto
 				.collect(Collectors.toList());
 	}
 
-	public DetailGameDto convertDetalleJuegoToDto(DetailGame detailGame) {
-		return modelMapper.map(detailGame, DetailGameDto.class);
+	public DetalleJuegoDto convertDetalleJuegoToDto(DetalleJuego detalleJuego) {
+		return modelMapper.map(detalleJuego, DetalleJuegoDto.class);
 	}
 
 	public DeveloperDto convertDeveloperToDto(Developer developer) {
@@ -96,16 +96,16 @@ public class EntityDtoConverter {
 		return registros.stream().map(this::convertRegistroToDto).collect(Collectors.toList());
 	}
 
-	public GeneroDto convertGeneroToDto(Genero genero) {
-		return modelMapper.map(genero, GeneroDto.class);
+	public GenreDto convertGenreToDto(Genre genre) {
+		return modelMapper.map(genre, GenreDto.class);
 	}
 
-	public List<GeneroDto> convertGeneroToDto(List<Genero> canciones) {
-		return canciones.stream().map(this::convertGeneroToDto) // igual a this::converEntutyToDto
+	public List<GenreDto> convertGenreToDto(List<Genre> genres) {
+		return genres.stream().map(this::convertGenreToDto) // igual a this::converEntutyToDto
 				.collect(Collectors.toList());
 	}
 
-	public GeneroJuegoDto convertGeneroJuegoToDto(GeneroJuego generoJuego) {
-		return modelMapper.map(generoJuego, GeneroJuegoDto.class);
+	public GenreGameDto convertGenreGameToDto(GenreGame genreGame) {
+		return modelMapper.map(genreGame, GenreGameDto.class);
 	}
 }
