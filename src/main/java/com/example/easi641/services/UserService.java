@@ -1,8 +1,10 @@
 package com.example.easi641.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.common.UserType;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
@@ -46,6 +48,9 @@ public class UserService {
 
 	@Autowired
 	private FollowingRepository followingRepository;
+
+	@Autowired
+	private EntityDtoConverter entityDtoConverter;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User createUser(UserDto userDto) throws Exception {
@@ -112,6 +117,29 @@ public class UserService {
 	public void mkFollow(User follower, User followed) throws Exception {
 		Following f = new Following(follower, followed);
 		followingRepository.save(f);
+	}
+
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public List<UserDto> getFollowers(Long id) throws Exception {
+		List<Long> f = userRepository.getFollowers(id);
+		List<UserDto> response = new ArrayList<UserDto>();
+		for (Long i : f) {
+			response.add(entityDtoConverter.convertUserToDto(userRepository.findById(i)
+					.orElseThrow(() -> new NotFoundException("Some of the follows are incorrect"))));
+		}
+		return response;
+	}
+
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public List<UserDto> getFollowing(Long id) throws Exception {
+		List<Long> f = userRepository.getFollowing(id);
+		List<UserDto> response = new ArrayList<UserDto>();
+		for (Long i : f) {
+			response.add(entityDtoConverter.convertUserToDto(userRepository.findById(i)
+					.orElseThrow(() -> new NotFoundException("Some of the follows are incorrect"))));
+
+		}
+		return response;
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)

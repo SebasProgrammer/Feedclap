@@ -14,7 +14,6 @@ import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.FeedclapException;
 import com.example.easi641.exception.NotFoundException;
-import com.example.easi641.repository.UserRepository;
 import com.example.easi641.services.DesarrolladorService;
 import com.example.easi641.services.ReviewerService;
 import com.example.easi641.services.UserService;
@@ -119,6 +118,24 @@ public class UserController {
 
 		userService.mkFollow(userFollower, userFollowed);
 		return new ResponseEntity<>(follower + " is now followed " + followed, HttpStatus.OK);
+	}
+
+	@PostMapping("/following")
+	public ResponseEntity<List<UserDto>> getFollowing(@RequestParam String username) throws Exception {
+
+		User user = userService.findUser(username)
+				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+
+		return new ResponseEntity<>(userService.getFollowing(user.getId()), HttpStatus.OK);
+	}
+
+	@PostMapping("/followers")
+	public ResponseEntity<List<UserDto>> getFollowers(@RequestParam String username) throws Exception {
+
+		User user = userService.findUser(username)
+				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+
+		return new ResponseEntity<>(userService.getFollowers(user.getId()), HttpStatus.OK);
 	}
 
 }

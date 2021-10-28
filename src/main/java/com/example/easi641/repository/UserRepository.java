@@ -29,4 +29,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value = "SELECT * FROM users WHERE type=1", nativeQuery = true)
 	List<User> getDevelopers();
 
+	@Query(value = "select follower from following where following=?1", nativeQuery = true)
+	List<Long> getFollowing(Long id);
+
+	@Query(value = "select following from following where follower=?1", nativeQuery = true)
+	List<Long> getFollowers(Long id);
 }
