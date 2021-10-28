@@ -14,7 +14,7 @@ import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.FeedclapException;
 import com.example.easi641.exception.NotFoundException;
-import com.example.easi641.services.DesarrolladorService;
+import com.example.easi641.services.DeveloperService;
 import com.example.easi641.services.ReviewerService;
 import com.example.easi641.services.UserService;
 
@@ -38,7 +38,7 @@ public class UserController {
 	UserService userService;
 
 	@Autowired
-	DesarrolladorService desarrolladorService;
+	DeveloperService developerService;
 
 	@Autowired
 	ReviewerService reviewerService;
@@ -54,7 +54,7 @@ public class UserController {
 	public ResponseEntity<String> createUser(@RequestBody UserDto userDto) throws Exception {
 		User user = userService.createUser(userDto);
 		if (user.getType() == UserType.DEVELOPER) {
-			desarrolladorService.createDesarrollador(user);
+			developerService.createDeveloper(user);
 		} else if (user.getType() == UserType.REVIEWER) {
 			reviewerService.createReviewer(user);
 		} else {
@@ -98,7 +98,6 @@ public class UserController {
 	@GetMapping("/login")
 	public ResponseEntity<String> loginUser(@RequestBody UserDto userDto) throws FeedclapException {
 		Boolean estado = userService.loginUser(userDto);
-
 		if (estado == true) {
 			return new ResponseEntity<>(" login correcto ", HttpStatus.OK);
 		} else {
@@ -137,5 +136,4 @@ public class UserController {
 
 		return new ResponseEntity<>(userService.getFollowers(user.getId()), HttpStatus.OK);
 	}
-
 }

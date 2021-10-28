@@ -15,7 +15,7 @@ import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.FeedclapException;
 import com.example.easi641.exception.NotFoundException;
-import com.example.easi641.repository.DesarrolladorRepository;
+import com.example.easi641.repository.DeveloperRepository;
 import com.example.easi641.repository.FollowingRepository;
 import com.example.easi641.repository.JuegoRepository;
 import com.example.easi641.repository.ReviewRepository;
@@ -44,7 +44,7 @@ public class UserService {
 	private ReviewerRepository reviewerRepository;
 
 	@Autowired
-	private DesarrolladorRepository desarrolladorRepository;
+	private DeveloperRepository developerRepository;
 
 	@Autowired
 	private FollowingRepository followingRepository;
@@ -92,7 +92,7 @@ public class UserService {
 		if (u.getType() == UserType.REVIEWER) {
 			reviewerRepository.deleteById(u.getId());
 		} else if (u.getType() == UserType.DEVELOPER) {
-			desarrolladorRepository.deleteById(u.getId());
+			developerRepository.deleteById(u.getId());
 		}
 		userRepository.delete(u);
 	}
@@ -100,12 +100,13 @@ public class UserService {
 	@Transactional
 	public Review createReview(ReviewDto reviewDto) {
 		User user = userRepository.findById(reviewDto.getUserId())
-				.orElseThrow(() -> new NotFoundException("Usuario not found."));
+				.orElseThrow(() -> new NotFoundException("User not found."));
 
 		Juego juego = juegoRepository.findById(reviewDto.getJuegoId())
 				.orElseThrow(() -> new NotFoundException("Juego not found."));
 
 		Review review = new Review();
+		// TODO
 		review.setJuego(juego);
 		review.setUser(user);
 		review.setDescripcion(reviewDto.getDescripcion());
@@ -146,7 +147,7 @@ public class UserService {
 	public Boolean loginUser(UserDto userDto) throws FeedclapException {
 		if (userRepository.countUsername(userDto.getUsername()) == 1) {
 
-			String password = userRepository.passswordofuser(userDto.getUsername());
+			String password = userRepository.getToken(userDto.getUsername());
 
 			if (password.equals(userDto.getToken())) {
 				return true;

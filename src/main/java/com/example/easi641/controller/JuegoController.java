@@ -14,65 +14,64 @@ import java.util.List;
 @RestController
 @RequestMapping("/juegos")
 public class JuegoController {
-    private final JuegoService juegoService;
-    private final EntityDtoConverter entityDtoConverter;
+	private final JuegoService juegoService;
+	private final EntityDtoConverter entityDtoConverter;
 
-    public JuegoController(JuegoService juegoService, EntityDtoConverter entityDtoConverter) {
-        this.juegoService = juegoService;
-        this.entityDtoConverter = entityDtoConverter;
-    }
+	public JuegoController(JuegoService juegoService, EntityDtoConverter entityDtoConverter) {
+		this.juegoService = juegoService;
+		this.entityDtoConverter = entityDtoConverter;
+	}
 
-    @PostMapping
-    public ResponseEntity<JuegoDto> createGame(@Valid @RequestBody JuegoDto juegoDto){
-        Juego juego = juegoService.createGame(juegoDto);
-        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juego), HttpStatus.CREATED);
-    }
+	@PostMapping
+	public ResponseEntity<JuegoDto> createGame(@Valid @RequestBody JuegoDto juegoDto) {
+		Juego juego = juegoService.createGame(juegoDto);
+		return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juego), HttpStatus.CREATED);
+	}
 
-    @GetMapping
-    public ResponseEntity<List<JuegoDto>> findAllGames(){
-        List<Juego> juegos = juegoService.findAllGames();
-        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
-    }
+	@GetMapping
+	public ResponseEntity<List<JuegoDto>> findAllGames() {
+		List<Juego> juegos = juegoService.findAllGames();
+		return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
+	}
 
-    @DeleteMapping("/{juegoId}")
-    public ResponseEntity<JuegoDto> popGame(@PathVariable Long juegoId){
-        juegoService.deleteGame(juegoId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+	@DeleteMapping("/{juegoId}")
+	public ResponseEntity<JuegoDto> popGame(@PathVariable Long juegoId) {
+		juegoService.deleteGame(juegoId);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-    @GetMapping("/categoria/{categoria}")
-    public ResponseEntity<List<JuegoDto>> findforCategoria(@PathVariable String categoria){
-        List<Juego> juegos = juegoService.findforCategoria(categoria);
-        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
-    }
+	@GetMapping("/categoria/{categoria}")
+	public ResponseEntity<List<JuegoDto>> findforCategoria(@PathVariable String categoria) {
+		List<Juego> juegos = juegoService.findforCategoria(categoria);
+		return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
+	}
 
-    @GetMapping("/genero/{genero}")
-    public ResponseEntity<List<JuegoDto>> findforGenero(@PathVariable String genero){
-        List<Juego> juegos = juegoService.findforGenero(genero);
-        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
-    }
+	@GetMapping("/genero/{genero}")
+	public ResponseEntity<List<JuegoDto>> findforGenero(@PathVariable String genero) {
+		List<Juego> juegos = juegoService.findforGenero(genero);
+		return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
+	}
 
-    @GetMapping("/busqueda_avanzada/{name_game}")
-    public ResponseEntity<List<JuegoDto>> findGamesNames(@PathVariable String name_game){
-        List<Juego> juegos = juegoService.findGamesNames(name_game);
-        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
-    }
+	@GetMapping("/busqueda_avanzada/{name_game}")
+	public ResponseEntity<List<JuegoDto>> findGamesNames(@PathVariable String name_game) {
+		List<Juego> juegos = juegoService.findGamesNames(name_game);
+		return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
+	}
 
-    @GetMapping("/descripcion/{nombre_videojuego}")
-    public ResponseEntity<String> description_Game(@PathVariable String nombre_videojuego){
-        return new ResponseEntity<>(juegoService.descipcion_Game(nombre_videojuego), HttpStatus.OK);
-    }
+	@GetMapping("/descripcion/{nombre_videojuego}")
+	public ResponseEntity<String> description_Game(@PathVariable String nombre_videojuego) {
+		return new ResponseEntity<>(juegoService.descipcion_Game(nombre_videojuego), HttpStatus.OK);
+	}
 
-    @GetMapping("/descarga/{nombre_videojuego}")
-    public ResponseEntity<String> getUrl(@PathVariable String nombre_videojuego){
-        return new ResponseEntity<>(juegoService.url_Game(nombre_videojuego), HttpStatus.OK);
-    }
+	@GetMapping("/descarga/{nombre_videojuego}")
+	public ResponseEntity<String> getUrl(@PathVariable String nombre_videojuego) {
+		return new ResponseEntity<>(juegoService.url_Game(nombre_videojuego), HttpStatus.OK);
+	}
 
-    @GetMapping("/proyectos/{desarrollador}")
-    public ResponseEntity<List<JuegoDto>> findGamesforDesarrollador(@PathVariable String desarrollador){
-        List<Juego> juegos = juegoService.findforDesarrollador(desarrollador);
-        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
-    }
-
+	@GetMapping("/proyectos/{developer}")
+	public ResponseEntity<List<JuegoDto>> findGamesforDeveloper(@PathVariable String developer) {
+		List<Juego> juegos = juegoService.findforDeveloper(developer);
+		return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
+	}
 
 }

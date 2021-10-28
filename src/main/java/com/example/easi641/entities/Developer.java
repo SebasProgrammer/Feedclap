@@ -13,17 +13,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "desarrolladores")
-public class Desarrollador {
+@Table(name = "developers")
+public class Developer {
 	@Id
 	@Column(name = "id", updatable = false)
 	private Long id;
 
-	@Column(name = "nombre", nullable = false)
-	private String nombre;
+	@Column(name = "name", nullable = false)
+	private String name;
 
-	@OneToMany(mappedBy = "desarrollador", cascade = { CascadeType.PERSIST,
-			CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "developer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 
 	private List<Proyecto> proyectos;
 

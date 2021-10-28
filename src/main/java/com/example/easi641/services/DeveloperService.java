@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.easi641.common.UserValidator;
-import com.example.easi641.dto.DesarrolladorDto;
+import com.example.easi641.dto.DeveloperDto;
 import com.example.easi641.dto.ProyectoDto;
 import com.example.easi641.dto.RegistroDto;
 import com.example.easi641.entities.*;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class DesarrolladorService {
+public class DeveloperService {
 	@Autowired
 	private ReviewerRepository reviewerRepository;
 
@@ -33,66 +33,66 @@ public class DesarrolladorService {
 	private ProyectoRepository proyectoRepository;
 
 	@Autowired
-	private DesarrolladorRepository desarrolladorRepository;
+	private DeveloperRepository developerRepository;
 
 	@Autowired
 	private UserRepository userRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public Desarrollador createDesarrollador(DesarrolladorDto desarrolladorDto) {
-		UserValidator.validateDesarrollador(desarrolladorDto);
-		Desarrollador desarrollador = Desarrollador.builder().nombre(desarrolladorDto.getNombre()).build();
+	public Developer createDeveloper(DeveloperDto developerDto) {
+		UserValidator.validateDeveloper(developerDto);
+		Developer developer = Developer.builder().name(developerDto.getName()).build();
 
-		return desarrolladorRepository.save(desarrollador);
+		return developerRepository.save(developer);
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public Desarrollador createDesarrollador(User user) {
-		Desarrollador desarrollador = new Desarrollador();
-		desarrollador.setId(user.getId());
-		desarrollador.setNombre(user.getName());
-		desarrollador.setProyectos(new ArrayList<>());
-		desarrollador.setRating(2.5f);
-		return desarrolladorRepository.save(desarrollador);
+	public Developer createDeveloper(User user) {
+		Developer developer = new Developer();
+		developer.setId(user.getId());
+		developer.setName(user.getName());
+		developer.setProyectos(new ArrayList<>());
+		developer.setRating(2.5f);
+		return developerRepository.save(developer);
 	}
 
 	@Transactional(readOnly = true)
-	public List<User> findAllDesarrolladores() {
+	public List<User> findAllDeveloperes() {
 		return userRepository.getDevelopers();
 	}
 
 	@Transactional
-	public void deleteDesarrollador(Long desarrolladorId) {
-		Desarrollador desarrollador = desarrolladorRepository.findById(desarrolladorId)
+	public void deleteDeveloper(Long developerId) {
+		Developer developer = developerRepository.findById(developerId)
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
-		desarrolladorRepository.delete(desarrollador);
+		developerRepository.delete(developer);
 	}
 
 	@Transactional
 	public Proyecto createProyecto(ProyectoDto proyectoDto) {
-		Desarrollador desarrollador = desarrolladorRepository.findById(proyectoDto.getDesarrolladorId())
-				.orElseThrow(() -> new NotFoundException("Desarrollador not found."));
+		Developer developer = developerRepository.findById(proyectoDto.getDeveloperId())
+				.orElseThrow(() -> new NotFoundException("Developer not found."));
 
 		Juego juego = juegoRepository.findById(proyectoDto.getJuegoId())
 				.orElseThrow(() -> new NotFoundException("Juego not found."));
 
 		Proyecto proyecto = new Proyecto();
 		proyecto.setJuego(juego);
-		proyecto.setDesarrollador(desarrollador);
+		proyecto.setDeveloper(developer);
 		proyecto.setPuesto(proyectoDto.getPuesto());
 		return proyectoRepository.save(proyecto);
 	}
 
 	@Transactional
 	public Registro createRegistro(RegistroDto registroDto) {
-		Desarrollador desarrollador = desarrolladorRepository.findById(registroDto.getDesarrolladorId())
-				.orElseThrow(() -> new NotFoundException("Desarrollador not found."));
+		Developer developer = developerRepository.findById(registroDto.getDeveloperId())
+				.orElseThrow(() -> new NotFoundException("Developer not found."));
 
 		Reviewer reviewer = reviewerRepository.findById(registroDto.getReviewerId())
 				.orElseThrow(() -> new NotFoundException("Reviewer not found."));
 
 		Registro registro = new Registro();
-		registro.setDesarrollador(desarrollador);
+		registro.setDeveloper(developer);
 		registro.setReviewer(reviewer);
 		registro.setMonto(registroDto.getMonto());
 		registro.setLocalDateTime(registroDto.getLocalDateTime());
@@ -100,9 +100,8 @@ public class DesarrolladorService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Desarrollador> findDesarrolladorName(String name_desarrollador){
-		return desarrolladorRepository.nombreDesarrollador(name_desarrollador);
+	public List<Developer> findDeveloperName(String name_developer) {
+		return developerRepository.nameDeveloper(name_developer);
 	}
-
 
 }
