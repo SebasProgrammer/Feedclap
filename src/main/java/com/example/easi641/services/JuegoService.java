@@ -17,96 +17,95 @@ import java.util.List;
 
 @Service
 public class JuegoService {
-    @Autowired ProyectoRepository proyectoRepository;
+	@Autowired
+	ProyectoRepository proyectoRepository;
 
-    @Autowired
-    private DesarrolladorRepository desarrolladorRepository;
+	@Autowired
+	private DesarrolladorRepository desarrolladorRepository;
 
-    @Autowired
-    private GeneroJuegoRepository generoJuegoRepository;
+	@Autowired
+	private GeneroJuegoRepository generoJuegoRepository;
 
-    @Autowired
-    private GeneroRepository generoRepository;
+	@Autowired
+	private GeneroRepository generoRepository;
 
-    @Autowired
-    private  JuegoRepository juegoRepository;
-    @Autowired
-    private DetalleJuegoRepository detalleJuegoRepository;
-    @Autowired
-    private CategoriaRepository categoriaRepository;
+	@Autowired
+	private JuegoRepository juegoRepository;
+	@Autowired
+	private DetalleJuegoRepository detalleJuegoRepository;
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public Juego createGame(JuegoDto juegoDto){
-        JuegoValidator.validateGame(juegoDto);
-        Juego juego = Juego.builder()
-                .nombre(juegoDto.getNombre())
-                .descripcion(juegoDto.getDescripcion())
-                .descarga(juegoDto.getDescarga())
-                .build();
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public Juego createGame(JuegoDto juegoDto) {
+		JuegoValidator.validateGame(juegoDto);
+		Juego juego = Juego.builder().nombre(juegoDto.getNombre()).descripcion(juegoDto.getDescripcion())
+				.descarga(juegoDto.getDescarga()).precio_feedback(juegoDto.getPrecio_feedback()).build();
 
-        return juegoRepository.save(juego);
-    }
+		return juegoRepository.save(juego);
+	}
 
-    @Transactional(readOnly = true)
-    public List<Juego> findAllGames(){
-        return juegoRepository.findAll();
-    }
+	@Transactional(readOnly = true)
+	public List<Juego> findAllGames() {
+		return juegoRepository.findAll();
+	}
 
-    @Transactional(readOnly = true)
-    public List<Juego> findGamesNames(String name_game){
-        return juegoRepository.gamesnamessimilar(name_game);
-    }
+	@Transactional(readOnly = true)
+	public List<Juego> findGamesNames(String name_game) {
+		return juegoRepository.gamesnamessimilar(name_game);
+	}
 
-    @Transactional(readOnly = true)
-    public String descipcion_Game(String nombre_videojuego){
-        return juegoRepository.gamename(nombre_videojuego);
-    }
+	@Transactional(readOnly = true)
+	public String descipcion_Game(String nombre_videojuego) {
+		return juegoRepository.gamename(nombre_videojuego);
+	}
 
-    @Transactional
-    public void deleteGame(Long juegoId){
-        Juego juego = juegoRepository.findById(juegoId)
-                .orElseThrow(()-> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
-        juegoRepository.delete(juego);
-    }
+	@Transactional
+	public void deleteGame(Long juegoId) {
+		Juego juego = juegoRepository.findById(juegoId)
+				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+		juegoRepository.delete(juego);
+	}
 
-    @Transactional(readOnly = true)
-    public List<Juego> findforCategoria(String categoria_name){
-        Long categoriaid= categoriaRepository.lista_de_juego_por_categoria(categoria_name);
-        List<Long> waaa = detalleJuegoRepository.lista_de_juego_por_categoria(categoriaid);
-        List<Juego> weeee= new ArrayList<>();
+	@Transactional(readOnly = true)
+	public List<Juego> findforCategoria(String categoria_name) {
+		Long categoriaid = categoriaRepository.lista_de_juego_por_categoria(categoria_name);
+		List<Long> waaa = detalleJuegoRepository.lista_de_juego_por_categoria(categoriaid);
+		List<Juego> weeee = new ArrayList<>();
 
-        for(int i = 0; i<waaa.size(); i++){
-            weeee.add(juegoRepository.getById(waaa.get(i)));
-        }
-        return weeee;
-    }
+		for (int i = 0; i < waaa.size(); i++) {
+			weeee.add(juegoRepository.getById(waaa.get(i)));
+		}
+		return weeee;
+	}
 
-    @Transactional(readOnly = true)
-    public List<Juego> findforGenero(String genero_name){
-        Long generoId= generoRepository.lista_de_juego_por_genero(genero_name);
-        List<Long> waaa  = generoJuegoRepository.lista_juego_genero(generoId);
-        List<Juego> weeee= new ArrayList<>();
+	@Transactional(readOnly = true)
+	public List<Juego> findforGenero(String genero_name) {
+		Long generoId = generoRepository.lista_de_juego_por_genero(genero_name);
+		List<Long> waaa = generoJuegoRepository.lista_juego_genero(generoId);
+		List<Juego> weeee = new ArrayList<>();
 
-        for(int i = 0; i<waaa.size(); i++){
-            weeee.add(juegoRepository.getById(waaa.get(i)));
-        }
-        return weeee;
-    }
-    @Transactional(readOnly = true)
-    public String url_Game(String nombre_videojuego){
-        return juegoRepository.gameurl(nombre_videojuego);
-    }
+		for (int i = 0; i < waaa.size(); i++) {
+			weeee.add(juegoRepository.getById(waaa.get(i)));
+		}
+		return weeee;
+	}
 
-    @Transactional(readOnly = true)
-    public List<Juego> findforDesarrollador(String desarrollador_name){
-        Long desarrolladorId= desarrolladorRepository.lista_de_juego_por_desarrollador(desarrollador_name);
-        List<Long> waaa  = proyectoRepository.lista_proyecto(desarrolladorId);
-        List<Juego> weeee= new ArrayList<>();
+	@Transactional(readOnly = true)
+	public String url_Game(String nombre_videojuego) {
+		return juegoRepository.gameurl(nombre_videojuego);
+	}
 
-        for(int i = 0; i<waaa.size(); i++){
-            weeee.add(juegoRepository.getById(waaa.get(i)));
-        }
-        return weeee;
-    }
+	@Transactional(readOnly = true)
+	public List<Juego> findforDesarrollador(String desarrollador_name) {
+		Long desarrolladorId = desarrolladorRepository.lista_de_juego_por_desarrollador(desarrollador_name);
+		List<Long> waaa = proyectoRepository.lista_proyecto(desarrolladorId);
+		List<Juego> weeee = new ArrayList<>();
+
+		for (int i = 0; i < waaa.size(); i++) {
+			weeee.add(juegoRepository.getById(waaa.get(i)));
+		}
+		return weeee;
+	}
 
 }

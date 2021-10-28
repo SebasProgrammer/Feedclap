@@ -24,7 +24,8 @@ public class SwaggerConfig {
 
 	private ApiInfo getApiInfo() {
 		return new ApiInfo("Order Service API", "This API provides all methods required for order management", "1.0",
-				"TERMS OF SERVICE URL", new Contact("Feedclap", "feedclap.xyz", "contact@feedclap.xyz"), "LICENSE",
-				"LICENSE URL", Collections.emptyList());
+				"TERMS OF SERVICE URL",
+				new Contact("Feedclap", "https://cesarmosqueira.github.io/FeedclapLanding/", "contact@feedclap.xyz"),
+				"LICENSE", "LICENSE URL", Collections.emptyList());
 	}
 }
