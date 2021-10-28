@@ -11,7 +11,6 @@ import com.example.easi641.entities.Review;
 import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.FeedclapException;
-import com.example.easi641.exception.InternalServerErrorException;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.DesarrolladorRepository;
 import com.example.easi641.repository.JuegoRepository;
@@ -44,13 +43,21 @@ public class UserService {
 	private DesarrolladorRepository desarrolladorRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public User createUser(UserDto userDto) throws FeedclapException {
+	public User createUser(UserDto userDto) throws Exception {
 		if (userRepository.countUsername(userDto.getUsername()) != 0) {
-			throw new InternalServerErrorException("INTERNAL_SERVER_ERROR",
-					userDto.getUsername() + " already in the server");
+			throw new Exception(userDto.getUsername() + " already in the server");
 		}
 		User newUser = new User(userDto);
 		return userRepository.save(newUser);
+	}
+
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public User updateUser(User user, UserDto userDto) throws Exception {
+		if (userRepository.countUsername(userDto.getUsername()) != 0) {
+			throw new Exception(userDto.getUsername() + " already in the server");
+		}
+		user.updateFromDto(userDto);
+		return userRepository.save(user);
 	}
 
 	public void deleteUser(Long id) {
