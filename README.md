@@ -2,6 +2,8 @@
 
 Plataforma donde los desarrolladores de videojuegos pueden contratar personas para recibir feedback y reseñas constructivas
 
+http://feedclap.herokuapp.com/swagger-ui.html
+
 ![Screenshot (1144)](https://user-images.githubusercontent.com/52842507/133537629-61ee07c4-b04e-49af-9aa4-adde73850aee.png)
 
 ## ¿QUIÉNES SOMOS?
