@@ -70,10 +70,10 @@ public class UserController {
 		User user = userService.findUser(username)
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
 
-		userService.updateUser(user, userDto);
 		List<UserDto> response = new ArrayList<UserDto>();
 		response.add(userDto);
 		response.add(entityDtoConverter.convertUserToDto(user));
+		userService.updateUser(user, userDto);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
