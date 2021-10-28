@@ -2,7 +2,6 @@ package com.example.easi641.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import com.example.easi641.common.UserType;
 import com.example.easi641.dto.ReviewDto;
@@ -50,20 +49,8 @@ public class UserService {
 			throw new InternalServerErrorException("INTERNAL_SERVER_ERROR",
 					userDto.getUsername() + " already in the server");
 		}
-		User newUser = initUser(userDto);
+		User newUser = new User(userDto);
 		return userRepository.save(newUser);
-	}
-
-	private User initUser(UserDto userDto) {
-		User user = new User();
-		user.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
-		user.setUsername(userDto.getUsername());
-		user.setName(userDto.getName());
-		user.setEmail(userDto.getEmail());
-		user.setToken(userDto.getToken());
-		user.setBirthdate(userDto.getBirthdate());
-		user.setType(userDto.getType());
-		return user;
 	}
 
 	public void deleteUser(Long id) {
