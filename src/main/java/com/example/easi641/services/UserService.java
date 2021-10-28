@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.example.easi641.common.UserType;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
+import com.example.easi641.entities.Following;
 import com.example.easi641.entities.Juego;
 import com.example.easi641.entities.Review;
 import com.example.easi641.entities.User;
@@ -13,6 +14,7 @@ import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.FeedclapException;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.DesarrolladorRepository;
+import com.example.easi641.repository.FollowingRepository;
 import com.example.easi641.repository.JuegoRepository;
 import com.example.easi641.repository.ReviewRepository;
 import com.example.easi641.repository.ReviewerRepository;
@@ -41,6 +43,9 @@ public class UserService {
 
 	@Autowired
 	private DesarrolladorRepository desarrolladorRepository;
+
+	@Autowired
+	private FollowingRepository followingRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User createUser(UserDto userDto) throws Exception {
@@ -101,6 +106,12 @@ public class UserService {
 		review.setDescripcion(reviewDto.getDescripcion());
 		review.setPuntaje(reviewDto.getPuntaje());
 		return reviewRepository.save(review);
+	}
+
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public void mkFollow(User follower, User followed) throws Exception {
+		Following f = new Following(follower, followed);
+		followingRepository.save(f);
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
