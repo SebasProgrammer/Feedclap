@@ -1,6 +1,7 @@
 package com.example.easi641.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.easi641.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query(value = "SELECT u.token FROM users u WHERE u.username = :usernamee", nativeQuery = true)
 	String passswordofuser(String usernamee);
+
+	@Query(value = "SELECT * FROM users u WHERE u.username = ?1", nativeQuery = true)
+	Optional<User> findByUsername(String username);
 
 	@Query(value = "SELECT count(*) as 'count' FROM users u WHERE u.username = ?1", nativeQuery = true)
 	Long countUsername(String username);

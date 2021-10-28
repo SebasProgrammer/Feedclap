@@ -55,16 +55,9 @@ public class UserController {
 	}
 
 	@DeleteMapping
-	public ResponseEntity<String> deleteUser(@RequestParam Long id) throws FeedclapException {
-		var u = userService.findUser(id);
-		if (u.isPresent()) {
-			userService.deleteUser(id);
-			desarrolladorService.deleteDesarrollador(id);
-			// reviewerService.deleteReviewer(id);
-			return new ResponseEntity<>("User " + u.get().getUsername() + " deleted", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("Id not found", HttpStatus.OK);
-		}
+	public ResponseEntity<String> deleteUser(@RequestParam String username) throws FeedclapException {
+		userService.deleteUser(username);
+		return new ResponseEntity<>(username + " deleted succesfully", HttpStatus.OK);
 	}
 
 	@GetMapping
@@ -83,7 +76,7 @@ public class UserController {
 	public ResponseEntity<String> loginUser(@RequestBody UserDto userDto) throws FeedclapException {
 		Boolean estado = userService.loginUser(userDto);
 
-		if (estado==true) {
+		if (estado == true) {
 			return new ResponseEntity<>(" login correcto ", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(" login incorrecto ", HttpStatus.OK);

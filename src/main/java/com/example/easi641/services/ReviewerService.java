@@ -49,7 +49,7 @@ public class ReviewerService {
 	}
 
 	@Transactional
-	public void deleteReviewer(Long reviewerId) {
+	public void deleteReviewer(Long reviewerId) throws RuntimeException {
 		Reviewer reviewer = reviewerRepository.findById(reviewerId)
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
 		reviewerRepository.delete(reviewer);

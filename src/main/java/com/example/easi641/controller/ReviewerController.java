@@ -28,4 +28,5 @@ public class ReviewerController {
 		List<User> revieweres = reviewerService.findAllReviewers();
 		return new ResponseEntity<>(entityDtoConverter.convertUserToDto(revieweres), HttpStatus.OK);
 	}
+
 }

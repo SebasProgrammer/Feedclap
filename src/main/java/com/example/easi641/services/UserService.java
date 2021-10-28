@@ -4,14 +4,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.example.easi641.common.UserType;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
-import com.example.easi641.entities.*;
+import com.example.easi641.entities.Juego;
+import com.example.easi641.entities.Review;
+import com.example.easi641.entities.User;
+import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.FeedclapException;
 import com.example.easi641.exception.InternalServerErrorException;
 import com.example.easi641.exception.NotFoundException;
+import com.example.easi641.repository.DesarrolladorRepository;
 import com.example.easi641.repository.JuegoRepository;
 import com.example.easi641.repository.ReviewRepository;
+import com.example.easi641.repository.ReviewerRepository;
 import com.example.easi641.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +37,12 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private ReviewerRepository reviewerRepository;
+
+	@Autowired
+	private DesarrolladorRepository desarrolladorRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User createUser(UserDto userDto) throws FeedclapException {
@@ -66,6 +78,21 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
+	public Optional<User> findUser(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	public void deleteUser(String username) {
+		User u = userRepository.findByUsername(username)
+				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+		if (u.getType() == UserType.REVIEWER) {
+			reviewerRepository.deleteById(u.getId());
+		} else if (u.getType() == UserType.DEVELOPER) {
+			desarrolladorRepository.deleteById(u.getId());
+		}
+		userRepository.delete(u);
+	}
+
 	@Transactional
 	public Review createReview(ReviewDto reviewDto) {
 		User user = userRepository.findById(reviewDto.getUserId())
@@ -86,16 +113,14 @@ public class UserService {
 	public Boolean loginUser(UserDto userDto) throws FeedclapException {
 		if (userRepository.countUsername(userDto.getUsername()) == 1) {
 
-			String password=userRepository.passswordofuser(userDto.getUsername());
+			String password = userRepository.passswordofuser(userDto.getUsername());
 
-			if(password.equals(userDto.getToken())){
+			if (password.equals(userDto.getToken())) {
 				return true;
-			}
-			else{
+			} else {
 				return false;
 			}
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
