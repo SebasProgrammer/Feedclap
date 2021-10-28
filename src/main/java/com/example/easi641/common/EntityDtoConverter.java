@@ -50,6 +50,10 @@ public class EntityDtoConverter {
 		return modelMapper.map(reviewer, ReviewerDto.class);
 	}
 
+	public ReviewDto convertReviewerToDto(Review review) {
+		return modelMapper.map(review, ReviewDto.class);
+	}
+
 	public List<DesarrolladorDto> convertDesarrolladorToDto(List<Desarrollador> desarrolladores) {
 		return desarrolladores.stream().map(this::convertDesarrolladorToDto).collect(Collectors.toList());
 	}

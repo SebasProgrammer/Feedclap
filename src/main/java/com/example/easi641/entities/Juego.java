@@ -26,6 +26,9 @@ public class Juego {
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
+	@Column(name = "precio_feedback", nullable = false)
+	private Float precio_feedback;
+
 	@Column(name = "descarga", nullable = false)
 	private String descarga;
 

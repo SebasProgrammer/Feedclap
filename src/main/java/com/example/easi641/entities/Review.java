@@ -30,4 +30,10 @@ public class Review {
 
     @Column(name = "puntaje_review", nullable = false)
     private Integer puntaje;
+
+    @Column(name = "valor_review", nullable = false)
+    private Float valor;
+
+    @Column(name = "estado_review", nullable = false)
+    private String estado;
 }

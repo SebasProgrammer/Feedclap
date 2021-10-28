@@ -14,7 +14,10 @@ public class JuegoDto {
 	@NotBlank
 	@NotNull
 	private String descripcion;
+	@NotNull
+	private Float precio_feedback;
 	@NotBlank
 	@NotNull
 	private String descarga;
+
 }
