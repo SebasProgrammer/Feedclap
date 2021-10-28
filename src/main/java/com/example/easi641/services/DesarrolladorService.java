@@ -98,4 +98,11 @@ public class DesarrolladorService {
 		registro.setLocalDateTime(registroDto.getLocalDateTime());
 		return registroRepository.save(registro);
 	}
+
+	@Transactional(readOnly = true)
+	public List<Desarrollador> findDesarrolladorName(String name_desarrollador){
+		return desarrolladorRepository.nombreDesarrollador(name_desarrollador);
+	}
+
+
 }

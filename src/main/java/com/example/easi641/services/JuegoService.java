@@ -17,6 +17,11 @@ import java.util.List;
 
 @Service
 public class JuegoService {
+    @Autowired ProyectoRepository proyectoRepository;
+
+    @Autowired
+    private DesarrolladorRepository desarrolladorRepository;
+
     @Autowired
     private GeneroJuegoRepository generoJuegoRepository;
 
@@ -92,5 +97,16 @@ public class JuegoService {
         return juegoRepository.gameurl(nombre_videojuego);
     }
 
+    @Transactional(readOnly = true)
+    public List<Juego> findforDesarrollador(String desarrollador_name){
+        Long desarrolladorId= desarrolladorRepository.lista_de_juego_por_desarrollador(desarrollador_name);
+        List<Long> waaa  = proyectoRepository.lista_proyecto(desarrolladorId);
+        List<Juego> weeee= new ArrayList<>();
+
+        for(int i = 0; i<waaa.size(); i++){
+            weeee.add(juegoRepository.getById(waaa.get(i)));
+        }
+        return weeee;
+    }
 
 }

@@ -67,4 +67,12 @@ public class JuegoController {
     public ResponseEntity<String> getUrl(@PathVariable String nombre_videojuego){
         return new ResponseEntity<>(juegoService.url_Game(nombre_videojuego), HttpStatus.OK);
     }
+
+    @GetMapping("/proyectos/{desarrollador}")
+    public ResponseEntity<List<JuegoDto>> findGamesforDesarrollador(@PathVariable String desarrollador){
+        List<Juego> juegos = juegoService.findforDesarrollador(desarrollador);
+        return new ResponseEntity<>(entityDtoConverter.convertJuegoToDto(juegos), HttpStatus.OK);
+    }
+
+
 }
