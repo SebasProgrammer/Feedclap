@@ -14,5 +14,7 @@ public class JuegoDto {
 	@NotBlank
 	@NotNull
 	private String descripcion;
-
+	@NotBlank
+	@NotNull
+	private String descarga;
 }

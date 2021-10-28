@@ -62,4 +62,9 @@ public class JuegoController {
     public ResponseEntity<String> description_Game(@PathVariable String nombre_videojuego){
         return new ResponseEntity<>(juegoService.descipcion_Game(nombre_videojuego), HttpStatus.OK);
     }
+
+    @GetMapping("/descarga/{nombre_videojuego}")
+    public ResponseEntity<String> getUrl(@PathVariable String nombre_videojuego){
+        return new ResponseEntity<>(juegoService.url_Game(nombre_videojuego), HttpStatus.OK);
+    }
 }

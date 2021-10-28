@@ -36,6 +36,7 @@ public class JuegoService {
         Juego juego = Juego.builder()
                 .nombre(juegoDto.getNombre())
                 .descripcion(juegoDto.getDescripcion())
+                .descarga(juegoDto.getDescarga())
                 .build();
 
         return juegoRepository.save(juego);
@@ -86,4 +87,10 @@ public class JuegoService {
         }
         return weeee;
     }
+    @Transactional(readOnly = true)
+    public String url_Game(String nombre_videojuego){
+        return juegoRepository.gameurl(nombre_videojuego);
+    }
+
+
 }

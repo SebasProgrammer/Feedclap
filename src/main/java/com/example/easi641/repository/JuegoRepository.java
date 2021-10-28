@@ -14,4 +14,7 @@ public interface JuegoRepository extends JpaRepository<Juego, Long> {
 
     @Query(value = "SELECT descripcion FROM juegos j WHERE j.nombre = :name", nativeQuery = true)
     String gamename(String name);
+
+    @Query(value = "SELECT j.descarga FROM juegos j WHERE j.nombre = :name", nativeQuery = true)
+    String gameurl(String name);
 }

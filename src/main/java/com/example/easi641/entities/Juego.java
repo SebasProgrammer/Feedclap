@@ -26,6 +26,9 @@ public class Juego {
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 
+	@Column(name = "descarga", nullable = false)
+	private String descarga;
+
 	@OneToMany(mappedBy = "juego", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<DetalleJuego> detalleJuegos; // = new ArrayList<>();
 
