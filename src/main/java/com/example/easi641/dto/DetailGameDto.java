@@ -3,7 +3,7 @@ package com.example.easi641.dto;
 import lombok.Data;
 
 @Data
-public class DetalleJuegoDto {
+public class DetailGameDto {
     private Long juegoId;
-    private Long categoriaId;
+    private Long categoryId;
 }

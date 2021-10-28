@@ -10,12 +10,12 @@ import java.util.List;
 
 @Entity
 @Table(
-        name="categorias"
+        name="categories"
 )
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Categoria {
+public class Category {
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
@@ -24,17 +24,17 @@ public class Categoria {
     private Long id;
 
     @Column(
-            name = "nombre",
+            name = "name",
             nullable = false,
             columnDefinition = "VARCHAR(50)",
             length = 50
     )
-    private String nombre;
+    private String name;
 
     @OneToMany(
-            mappedBy = "categoria",
+            mappedBy = "category",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
             fetch = FetchType.LAZY
     )
-    private List<DetalleJuego> detalleJuegos = new ArrayList<>();
+    private List<DetailGame> detailGames = new ArrayList<>();
 }

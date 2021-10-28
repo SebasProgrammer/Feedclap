@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DetalleJuego {
+public class DetailGame {
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
@@ -26,24 +26,24 @@ public class DetalleJuego {
 
     @ManyToOne
     @JoinColumn(
-            name = "categorias_id",
+            name = "categories_id",
             updatable = false,
             nullable = false,
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
-                    name = "categorias_juegos_fk"
+                    name = "categories_games_fk"
             )
     )
-    private Categoria categoria;
+    private Category category;
 
     @ManyToOne
     @JoinColumn(
-            name = "juegos_id",
+            name = "games_id",
             updatable = false,
             nullable = false,
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
-                    name = "juegos_categorias_fk"
+                    name = "juegos_categories_fk"
             )
     )
     private Juego juego;

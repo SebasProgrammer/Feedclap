@@ -6,9 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CategoriaDto {
+public class CategoryDto {
 	private Long id;
 	@NotBlank
 	@NotNull
-	private String nombre;
+	private String name;
 }

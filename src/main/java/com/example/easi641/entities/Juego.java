@@ -33,7 +33,7 @@ public class Juego {
 	private String descarga;
 
 	@OneToMany(mappedBy = "juego", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-	private List<DetalleJuego> detalleJuegos; // = new ArrayList<>();
+	private List<DetailGame> detailGames; // = new ArrayList<>();
 
 	@OneToMany(mappedBy = "juego", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<GeneroJuego> generoJuegos; // = new ArrayList<>();

@@ -29,17 +29,17 @@ public class EntityDtoConverter {
 				.collect(Collectors.toList());
 	}
 
-	public CategoriaDto convertCategoriaToDto(Categoria categoria) {
-		return modelMapper.map(categoria, CategoriaDto.class);
+	public CategoryDto convertCategoryToDto(Category category) {
+		return modelMapper.map(category, CategoryDto.class);
 	}
 
-	public List<CategoriaDto> convertCategoriaToDto(List<Categoria> canciones) {
-		return canciones.stream().map(this::convertCategoriaToDto) // igual a this::converEntutyToDto
+	public List<CategoryDto> convertCategoryToDto(List<Category> categories) {
+		return categories.stream().map(this::convertCategoryToDto) // igual a this::converEntutyToDto
 				.collect(Collectors.toList());
 	}
 
-	public DetalleJuegoDto convertDetalleJuegoToDto(DetalleJuego detalleJuego) {
-		return modelMapper.map(detalleJuego, DetalleJuegoDto.class);
+	public DetailGameDto convertDetalleJuegoToDto(DetailGame detailGame) {
+		return modelMapper.map(detailGame, DetailGameDto.class);
 	}
 
 	public DesarrolladorDto convertDesarrolladorToDto(Desarrollador desarrollador) {

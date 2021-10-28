@@ -33,7 +33,7 @@ public class JuegoService {
     @Autowired
     private DetalleJuegoRepository detalleJuegoRepository;
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private CategoryRepository categoryRepository;
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Juego createGame(JuegoDto juegoDto){
@@ -42,6 +42,7 @@ public class JuegoService {
                 .nombre(juegoDto.getNombre())
                 .descripcion(juegoDto.getDescripcion())
                 .descarga(juegoDto.getDescarga())
+                .precio_feedback(juegoDto.getPrecio_feedback())
                 .build();
 
         return juegoRepository.save(juego);
@@ -71,7 +72,7 @@ public class JuegoService {
 
     @Transactional(readOnly = true)
     public List<Juego> findforCategoria(String categoria_name){
-        Long categoriaid= categoriaRepository.lista_de_juego_por_categoria(categoria_name);
+        Long categoriaid= categoryRepository.GameforCategory(categoria_name);
         List<Long> waaa = detalleJuegoRepository.lista_de_juego_por_categoria(categoriaid);
         List<Juego> weeee= new ArrayList<>();
 
