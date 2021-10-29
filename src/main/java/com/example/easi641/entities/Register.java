@@ -5,14 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import com.example.easi641.dto.RegisterDto;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "registros")
+@Table(name = "registers")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Registro {
+public class Register {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false)
@@ -26,13 +29,19 @@ public class Registro {
 	@JoinColumn(name = "reviewers_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "reviewers_developer_fk"))
 	private Reviewer reviewer;
 
-	@Column(name = "descripcion", nullable = false)
-	private String descripcion;
+	@Column(name = "description", nullable = false)
+	private String description;
 
-	@Column(name = "monto", nullable = false)
-	private Double monto;
+	@Column(name = "amount", nullable = false)
+	private Double amount;
 
-	@Column(name = "fecha", nullable = false)
-	private LocalDateTime localDateTime;
+	@Column(name = "date", nullable = false)
+	private LocalDateTime date;
 
+	public Register(Developer developer, Reviewer reviewer, RegisterDto registerDto) {
+		this.setDeveloper(developer);
+		this.setReviewer(reviewer);
+		this.setAmount(registerDto.getAmount());
+		this.setDate(registerDto.getDate());
+	}
 }

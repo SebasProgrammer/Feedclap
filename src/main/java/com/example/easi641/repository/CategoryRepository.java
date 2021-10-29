@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    @Query(value = "SELECT id FROM categorias c WHERE c.name=:name_category", nativeQuery = true)
-    Long GameforCategory(String name_category);
+	@Query(value = "SELECT id FROM categories c WHERE c.name=:name_category", nativeQuery = true)
+	Long getCategoryId(String name_category);
 
 }

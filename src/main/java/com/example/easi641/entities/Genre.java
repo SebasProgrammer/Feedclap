@@ -9,20 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "generos")
+@Table(name = "genres")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Genero {
+public class Genre {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false)
 	private Long id;
 
-	@Column(name = "nombre", nullable = false, columnDefinition = "VARCHAR(50)", length = 50)
-	private String nombre;
+	@Column(name = "name", nullable = false, columnDefinition = "VARCHAR(32)", length = 32)
+	private String name;
 
-	@OneToMany(mappedBy = "genero", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-
-	private List<GeneroJuego> generoJuegos = new ArrayList<>();
+	@OneToMany(mappedBy = "genre", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	private List<GameGenre> gameGenres = new ArrayList<>();
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,10 +25,16 @@ public class Developer {
 	private String name;
 
 	@OneToMany(mappedBy = "developer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-
-	private List<Proyecto> proyectos;
+	private List<Project> projects;
 
 	@Column(name = "rating", nullable = false)
 	private float rating;
+
+	public Developer(User user) {
+		this.setId(user.getId());
+		this.setName(user.getName());
+		this.setProjects(new ArrayList<>());
+		this.setRating(2.5f);
+	}
 
 }

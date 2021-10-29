@@ -2,14 +2,14 @@ package com.example.easi641.services;
 
 import com.example.easi641.common.CategoryValidator;
 import com.example.easi641.dto.CategoryDto;
-import com.example.easi641.dto.DetailGameDto;
+import com.example.easi641.dto.GameDetailDto;
 import com.example.easi641.entities.Category;
-import com.example.easi641.entities.DetailGame;
-import com.example.easi641.entities.Juego;
+import com.example.easi641.entities.GameDetail;
+import com.example.easi641.entities.Game;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.CategoryRepository;
-import com.example.easi641.repository.DetailGameRepository;
-import com.example.easi641.repository.JuegoRepository;
+import com.example.easi641.repository.GameDetailRepository;
+import com.example.easi641.repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -20,41 +20,38 @@ import java.util.List;
 
 @Service
 public class CategoryService {
-    @Autowired
-    private CategoryRepository categoryRepository;
+	@Autowired
+	private CategoryRepository categoryRepository;
 
-    @Autowired
-    private DetailGameRepository detailGameRepository;
+	@Autowired
+	private GameDetailRepository gameDetailRepository;
 
-    @Autowired
-    private JuegoRepository juegoRepository;
+	@Autowired
+	private GameRepository gameRepository;
 
-    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public Category createCategory(CategoryDto categoryDto){
-        CategoryValidator.validateCategory(categoryDto);
-        Category category = new Category();
-        category.setName(categoryDto.getName());
+	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public Category createCategory(CategoryDto categoryDto) {
+		CategoryValidator.validateCategory(categoryDto);
+		Category category = new Category();
+		category.setName(categoryDto.getName());
 
-        return categoryRepository.save(category);
-    }
+		return categoryRepository.save(category);
+	}
 
-    @Transactional(readOnly = true)
-    public List<Category> findAllCategories(){
-        return categoryRepository.findAll();
-    }
+	@Transactional(readOnly = true)
+	public List<Category> findAllCategories() {
+		return categoryRepository.findAll();
+	}
 
+	@Transactional
+	public GameDetail createGameDetail(GameDetailDto gameDetailDto) {
+		Game game = gameRepository.findById(gameDetailDto.getGameId())
+				.orElseThrow(() -> new NotFoundException("Game not found."));
 
-    @Transactional
-    public DetailGame createDetailGame(DetailGameDto detailGameDto) {
-        Juego game = juegoRepository.findById(detailGameDto.getJuegoId())
-                .orElseThrow(() -> new NotFoundException("Game not found."));
+		Category category = categoryRepository.findById(gameDetailDto.getCategoryId())
+				.orElseThrow(() -> new NotFoundException("Category not found."));
 
-        Category category = categoryRepository.findById(detailGameDto.getCategoryId())
-                .orElseThrow(() -> new NotFoundException("Category not found."));
-
-        DetailGame detailGame = new DetailGame();
-        detailGame.setJuego(game);
-        detailGame.setCategory(category);
-        return detailGameRepository.save(detailGame);
-    }
+		GameDetail gameDetail = new GameDetail(category, game);
+		return gameDetailRepository.save(gameDetail);
+	}
 }

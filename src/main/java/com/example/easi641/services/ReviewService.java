@@ -1,12 +1,17 @@
 package com.example.easi641.services;
 
+import java.util.List;
+
 import com.example.easi641.dto.ReviewDto;
-import com.example.easi641.entities.*;
+import com.example.easi641.entities.Game;
+import com.example.easi641.entities.Review;
+import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
-import com.example.easi641.repository.JuegoRepository;
+import com.example.easi641.repository.GameRepository;
 import com.example.easi641.repository.ReviewRepository;
 import com.example.easi641.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -22,38 +27,37 @@ public class ReviewService {
 	private UserRepository userRepository;
 
 	@Autowired
-	private JuegoRepository juegoRepository;
+	private GameRepository gameRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Review createReview(ReviewDto reviewDto) {
-		Review review = new Review();
 
-		Juego juego = juegoRepository.findById(reviewDto.getJuegoId())
+		Game game = gameRepository.findById(reviewDto.getGameId())
 				.orElseThrow(() -> new NotFoundException("Game not found."));
 
 		User user = userRepository.findById(reviewDto.getUserId())
 				.orElseThrow(() -> new NotFoundException("User not found."));
 
-		review.setJuego(juego);
-		review.setUser(user);
-		review.setDescripcion(reviewDto.getDescripcion());
-		review.setPuntaje(reviewDto.getPuntaje());
-		review.setValor(juego.getPrecio_feedback());
-		review.setEstado(reviewDto.getEstado());
+		Review review = new Review(user, game, reviewDto);
 		return reviewRepository.save(review);
 	}
 
 	@Transactional(readOnly = true)
-	public String valor_reviewww(Long review_id) {
-		Review review = reviewRepository.findById(review_id)
+	public List<Review> findAllReviews() {
+		return reviewRepository.findAll();
+	}
+
+	@Transactional(readOnly = true)
+	public Float getReviewCost(Long reviewId) {
+		Review review = reviewRepository.findById(reviewId)
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
-		Float va_re = review.getValor();
-		return va_re.toString();
+		Float reviewCost = review.getCost();
+		return reviewCost;
 	}
 
 	@Transactional
-	public void deleteReview(Long review_id) {
-		Review review = reviewRepository.findById(review_id)
+	public void deleteReview(Long reviewId) {
+		Review review = reviewRepository.findById(reviewId)
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
 		reviewRepository.delete(review);
 	}

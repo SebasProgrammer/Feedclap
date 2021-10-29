@@ -9,15 +9,14 @@ import com.example.easi641.common.UserType;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
 import com.example.easi641.entities.Following;
-import com.example.easi641.entities.Juego;
+import com.example.easi641.entities.Game;
 import com.example.easi641.entities.Review;
 import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
-import com.example.easi641.exception.FeedclapException;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.DeveloperRepository;
 import com.example.easi641.repository.FollowingRepository;
-import com.example.easi641.repository.JuegoRepository;
+import com.example.easi641.repository.GameRepository;
 import com.example.easi641.repository.ReviewRepository;
 import com.example.easi641.repository.ReviewerRepository;
 import com.example.easi641.repository.UserRepository;
@@ -35,7 +34,7 @@ public class UserService {
 	private ReviewRepository reviewRepository;
 
 	@Autowired
-	private JuegoRepository juegoRepository;
+	private GameRepository juegoRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -64,7 +63,8 @@ public class UserService {
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User updateUser(User user, UserDto userDto) throws Exception {
 		if (userRepository.countUsername(userDto.getUsername()) != 0) {
-			throw new Exception(userDto.getUsername() + " already in the server");
+			if (user.getUsername() != userDto.getUsername())
+				throw new Exception(userDto.getUsername() + " already in the server");
 		}
 		user.updateFromDto(userDto);
 		return userRepository.save(user);
@@ -102,15 +102,10 @@ public class UserService {
 		User user = userRepository.findById(reviewDto.getUserId())
 				.orElseThrow(() -> new NotFoundException("User not found."));
 
-		Juego juego = juegoRepository.findById(reviewDto.getJuegoId())
-				.orElseThrow(() -> new NotFoundException("Juego not found."));
+		Game game = juegoRepository.findById(reviewDto.getGameId())
+				.orElseThrow(() -> new NotFoundException("Game not found."));
 
-		Review review = new Review();
-		// TODO
-		review.setJuego(juego);
-		review.setUser(user);
-		review.setDescripcion(reviewDto.getDescripcion());
-		review.setPuntaje(reviewDto.getPuntaje());
+		Review review = new Review(user, game, reviewDto);
 		return reviewRepository.save(review);
 	}
 
@@ -144,16 +139,11 @@ public class UserService {
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public Boolean loginUser(UserDto userDto) throws FeedclapException {
-		if (userRepository.countUsername(userDto.getUsername()) == 1) {
-
-			String password = userRepository.getToken(userDto.getUsername());
-
-			if (password.equals(userDto.getToken())) {
-				return true;
-			} else {
-				return false;
-			}
+	public Boolean loginUser(String username, String token) throws Exception {
+		String realToken = userRepository.getToken(username)
+				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+		if (realToken.equals(token)) {
+			return true;
 		} else {
 			return false;
 		}

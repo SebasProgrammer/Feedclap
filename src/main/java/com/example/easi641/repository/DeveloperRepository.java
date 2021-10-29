@@ -4,12 +4,7 @@ import com.example.easi641.entities.Developer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-
 public interface DeveloperRepository extends JpaRepository<Developer, Long> {
-	@Query(value = "SELECT d.name FROM developeres d WHERE d.name = :name", nativeQuery = true)
-	List<Developer> nameDeveloper(String name);
-
-	@Query(value = "SELECT id FROM developers d WHERE d.name=:name_developer", nativeQuery = true)
-	Long GameforDeveloper(String name_developer);
+	@Query(value = "SELECT d.id FROM developers d WHERE d.name=:developerName", nativeQuery = true)
+	Long getDeveloperId(String developerName);
 }

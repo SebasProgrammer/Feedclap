@@ -7,15 +7,15 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class ReviewDto {
-    private Long id;
-    private Long userId;
-    private Long juegoId;
-    @NotBlank
-    @NotNull
-    private String descripcion;
-    @NotNull
-    private Integer puntaje;
-    @NotBlank
-    @NotNull
-    private String estado;
+	private Long id;
+	private Long userId;
+	private Long gameId;
+	@NotBlank
+	@NotNull
+	private String description;
+	@NotNull
+	private Integer rating;
+	@NotBlank
+	@NotNull
+	private String state;
 }

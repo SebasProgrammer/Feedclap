@@ -4,20 +4,22 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Data
-public class JuegoDto {
-	private Long id;
+public class RegisterDto {
+	private Long developerId;
+	private Long reviewerId;
 	@NotBlank
 	@NotNull
-	private String nombre;
+	private String description;
+
 	@NotBlank
 	@NotNull
-	private String descripcion;
-	@NotNull
-	private Float precio_feedback;
+	private Double amount;
+
 	@NotBlank
 	@NotNull
-	private String descarga;
+	private LocalDateTime date;
 
 }

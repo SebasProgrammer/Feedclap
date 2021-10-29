@@ -23,8 +23,8 @@ public class Following {
 	private Long following;
 
 	public Following(User er, User ing) {
-		follower = er.getId();
-		following = ing.getId();
+		this.setFollower(er.getId());
+		this.setFollowing(ing.getId());
 	}
 
 }

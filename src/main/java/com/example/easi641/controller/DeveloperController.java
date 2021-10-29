@@ -30,31 +30,23 @@ public class DeveloperController {
 		return new ResponseEntity<>(entityDtoConverter.convertUserToDto(developers), HttpStatus.OK);
 	}
 
-	// @PutMapping("/{developerId}")
-	// public ResponseEntity<JuegoResponse> popGame(@PathVariable Long
-	// developerId) {
-	// developerService.deleteDeveloper(developerId);
-	// return new ResponseEntity<>(HttpStatus.OK);
-	// }
-
 	@ResponseStatus(HttpStatus.OK)
-	@PostMapping("/proyecto")
-	public ResponseEntity<ProyectoDto> createProyecto(@Valid @RequestBody ProyectoDto proyectoDto) {
-		Proyecto proyecto = developerService.createProyecto(proyectoDto);
-		return new ResponseEntity<>(entityDtoConverter.convertProyectoToDto(proyecto), HttpStatus.CREATED);
+	@PostMapping("/project") // TODO Project Dto must ask for a username and not an ID
+	public ResponseEntity<ProjectDto> createProject(@Valid @RequestBody ProjectDto projectDto) {
+		Project project = developerService.createProject(projectDto);
+		return new ResponseEntity<>(entityDtoConverter.convertProjectToDto(project), HttpStatus.CREATED);
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@PostMapping("/registro")
-	public ResponseEntity<RegistroDto> createRegistro(@Valid @RequestBody RegistroDto registroDto) {
-		Registro registro = developerService.createRegistro(registroDto);
-		return new ResponseEntity<>(entityDtoConverter.convertRegistroToDto(registro), HttpStatus.CREATED);
+	@PostMapping("/register")
+	public ResponseEntity<RegisterDto> createRegister(@Valid @RequestBody RegisterDto registerDto) {
+		Register register = developerService.createRegister(registerDto);
+		return new ResponseEntity<>(entityDtoConverter.convertRegisterToDto(register), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/nombres/{name_game}")
-	public ResponseEntity<List<DeveloperDto>> findDeveloperNames(@PathVariable String name_game) {
-		List<Developer> developers = developerService.findDeveloperName(name_game);
+	@GetMapping("/bygame/{name_game}") // TODO Not working at all
+	public ResponseEntity<List<DeveloperDto>> findDeveloperNames(@PathVariable Long gameId) {
+		List<Developer> developers = developerService.findDevelopersByGame(gameId);
 		return new ResponseEntity<>(entityDtoConverter.convertDeveloperToDto(developers), HttpStatus.OK);
-
 	}
 }
