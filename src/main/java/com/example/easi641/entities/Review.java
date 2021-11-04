@@ -1,39 +1,47 @@
 package com.example.easi641.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import com.example.easi641.dto.ReviewDto;
+
 @Entity
 @Table(name = "reviews")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "users_juegos_fk"))
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "reviewer", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "users_juegos_fk"))
+	private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "juegos_id", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "juegos_users_fk"))
-    private Juego juego;
+	@ManyToOne
+	@JoinColumn(name = "game", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "juegos_users_fk"))
+	private Game juego;
 
-    @Column(name = "descripcion", nullable = false)
-    private String descripcion;
+	@Column(name = "description", nullable = false)
+	private String description;
 
-    @Column(name = "puntaje_review", nullable = false)
-    private Integer puntaje;
+	@Column(name = "rating", nullable = false)
+	private Integer rating;
 
-    @Column(name = "valor_review", nullable = false)
-    private Float valor;
+	@Column(name = "cost", nullable = false)
+	private Float cost;
 
-    @Column(name = "estado_review", nullable = false)
-    private String estado;
+	@Column(name = "state", nullable = false)
+	private String state;
+
+	public Review(User user, Game game, ReviewDto reviewDto) {
+		this.setJuego(juego);
+		this.setUser(user);
+		this.setDescription(reviewDto.getDescription());
+		this.setRating(reviewDto.getRating());
+		this.setState(reviewDto.getState());
+	}
 }

@@ -6,12 +6,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class ReviewerDto {
-	private Long id;
+public class ProjectDto {
+	private Long developerId;
+	private Long gameId;
 	@NotBlank
 	@NotNull
-	private String name;
-	private float rating;
-	private int nivel;
-	private int tipo;
+	private String role;
 }

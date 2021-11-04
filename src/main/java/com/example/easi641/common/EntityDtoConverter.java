@@ -16,34 +16,34 @@ public class EntityDtoConverter {
 		this.modelMapper = modelMapper;
 	}
 
-	public JuegoDto convertJuegoToDto(Juego juego) {
-		return modelMapper.map(juego, JuegoDto.class);
+	public GameDto convertGameToDto(Game game) {
+		return modelMapper.map(game, GameDto.class);
 	}
 
 	// public Juego convertEntityToDto(JuegoRequest juegoRequest){
 	// return modelMapper.map(juegoRequest, Juego.class);
 	// }
 
-	public List<JuegoDto> convertJuegoToDto(List<Juego> juegos) {
-		return juegos.stream().map(this::convertJuegoToDto) // igual a this::converEntutyToDto
+	public List<GameDto> convertGameToDto(List<Game> games) {
+		return games.stream().map(this::convertGameToDto) // igual a this::converEntutyToDto
 				.collect(Collectors.toList());
 	}
 
-	public CategoriaDto convertCategoriaToDto(Categoria categoria) {
-		return modelMapper.map(categoria, CategoriaDto.class);
+	public CategoryDto convertCategoryToDto(Category category) {
+		return modelMapper.map(category, CategoryDto.class);
 	}
 
-	public List<CategoriaDto> convertCategoriaToDto(List<Categoria> canciones) {
-		return canciones.stream().map(this::convertCategoriaToDto) // igual a this::converEntutyToDto
+	public List<CategoryDto> convertCategoryToDto(List<Category> categories) {
+		return categories.stream().map(this::convertCategoryToDto) // igual a this::converEntutyToDto
 				.collect(Collectors.toList());
 	}
 
-	public DetalleJuegoDto convertDetalleJuegoToDto(DetalleJuego detalleJuego) {
-		return modelMapper.map(detalleJuego, DetalleJuegoDto.class);
+	public GameDetailDto convertDetalleJuegoToDto(GameDetail gameDetail) {
+		return modelMapper.map(gameDetail, GameDetailDto.class);
 	}
 
-	public DesarrolladorDto convertDesarrolladorToDto(Desarrollador desarrollador) {
-		return modelMapper.map(desarrollador, DesarrolladorDto.class);
+	public DeveloperDto convertDeveloperToDto(Developer developer) {
+		return modelMapper.map(developer, DeveloperDto.class);
 	}
 
 	public ReviewerDto convertReviewerToDto(Reviewer reviewer) {
@@ -54,20 +54,20 @@ public class EntityDtoConverter {
 		return modelMapper.map(review, ReviewDto.class);
 	}
 
-	public List<DesarrolladorDto> convertDesarrolladorToDto(List<Desarrollador> desarrolladores) {
-		return desarrolladores.stream().map(this::convertDesarrolladorToDto).collect(Collectors.toList());
+	public List<DeveloperDto> convertDeveloperToDto(List<Developer> developers) {
+		return developers.stream().map(this::convertDeveloperToDto).collect(Collectors.toList());
 	}
 
 	public List<ReviewerDto> convertReviewerToDto(List<Reviewer> reviewers) {
 		return reviewers.stream().map(this::convertReviewerToDto).collect(Collectors.toList());
 	}
 
-	public ProyectoDto convertProyectoToDto(Proyecto proyecto) {
-		return modelMapper.map(proyecto, ProyectoDto.class);
+	public ProjectDto convertProjectToDto(Project project) {
+		return modelMapper.map(project, ProjectDto.class);
 	}
 
-	public List<ProyectoDto> convertProyectoToDto(List<Proyecto> proyectos) {
-		return proyectos.stream().map(this::convertProyectoToDto).collect(Collectors.toList());
+	public List<ProjectDto> convertProjectToDto(List<Project> projects) {
+		return projects.stream().map(this::convertProjectToDto).collect(Collectors.toList());
 	}
 
 	public UserDto convertUserToDto(User user) {
@@ -88,24 +88,27 @@ public class EntityDtoConverter {
 		return reviews.stream().map(this::convertReviewToDto).collect(Collectors.toList());
 	}
 
-	public RegistroDto convertRegistroToDto(Registro registro) {
-		return modelMapper.map(registro, RegistroDto.class);
+	public RegisterDto convertRegisterToDto(Register register) {
+		return modelMapper.map(register, RegisterDto.class);
 	}
 
-	public List<RegistroDto> convertRegistroToDto(List<Registro> registros) {
-		return registros.stream().map(this::convertRegistroToDto).collect(Collectors.toList());
+	public List<RegisterDto> convertRegisterToDto(List<Register> registers) {
+		return registers.stream().map(this::convertRegisterToDto).collect(Collectors.toList());
 	}
 
-	public GeneroDto convertGeneroToDto(Genero genero) {
-		return modelMapper.map(genero, GeneroDto.class);
+	public GenreDto convertGenreToDto(Genre genre) {
+		return modelMapper.map(genre, GenreDto.class);
 	}
 
-	public List<GeneroDto> convertGeneroToDto(List<Genero> canciones) {
-		return canciones.stream().map(this::convertGeneroToDto) // igual a this::converEntutyToDto
-				.collect(Collectors.toList());
+	public List<GenreDto> convertGenreToDto(List<Genre> genres) {
+		return genres.stream().map(this::convertGenreToDto).collect(Collectors.toList());
 	}
 
-	public GeneroJuegoDto convertGeneroJuegoToDto(GeneroJuego generoJuego) {
-		return modelMapper.map(generoJuego, GeneroJuegoDto.class);
+	public GameGenreDto convertGameGenreToDto(GameGenre gameGenre) {
+		return modelMapper.map(gameGenre, GameGenreDto.class);
+	}
+
+	public List<GameGenreDto> convertGameGenreToDto(List<GameGenre> gameGenres) {
+		return gameGenres.stream().map(this::convertGameGenreToDto).collect(Collectors.toList());
 	}
 }

@@ -7,13 +7,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "reviewers")
-public class Reviewer {
+@Table(name = "developers")
+public class Developer {
 	@Id
 	@Column(name = "id", updatable = false)
 	private Long id;
@@ -21,18 +24,17 @@ public class Reviewer {
 	@Column(name = "name", nullable = false)
 	private String name;
 
+	@OneToMany(mappedBy = "developer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	private List<Project> projects;
+
 	@Column(name = "rating", nullable = false)
 	private float rating;
 
-	@Column(name = "nivel", nullable = false)
-	private int nivel;
+	public Developer(User user) {
+		this.setId(user.getId());
+		this.setName(user.getName());
+		this.setProjects(new ArrayList<>());
+		this.setRating(2.5f);
+	}
 
-	@Column(name = "tipo", nullable = false)
-	private int tipo;
-
-	// List<Reviews>
-	// @OneToMany(mappedBy = "desarrollador", cascade = { CascadeType.PERSIST,
-	// CascadeType.REMOVE }, fetch = FetchType.LAZY)
-
-	// private List<Proyecto> proyectos;
 }

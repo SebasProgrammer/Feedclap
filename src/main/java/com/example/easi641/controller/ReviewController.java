@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 @RestController
@@ -28,10 +30,16 @@ public class ReviewController {
 		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(review), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/valor/{review_id}")
-	public ResponseEntity<String> get_valor_review(@PathVariable Long review_id) {
-		String valor_review = reviewService.valor_reviewww(review_id);
-		return new ResponseEntity<>(valor_review, HttpStatus.OK);
+	@GetMapping
+	public ResponseEntity<List<ReviewDto>> findAllGenres() {
+		List<Review> reviews = reviewService.findAllReviews();
+		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(reviews), HttpStatus.OK);
+	}
+
+	@GetMapping("/valor/{reviewId}")
+	public ResponseEntity<String> getReviewCost(@PathVariable Long reviewId) {
+		Float reviewCost = reviewService.getReviewCost(reviewId);
+		return new ResponseEntity<>("Review #" + reviewId + " costs US$" + reviewCost, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{review_id}")

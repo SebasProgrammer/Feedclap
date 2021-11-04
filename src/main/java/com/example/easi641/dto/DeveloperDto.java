@@ -6,12 +6,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class ReviewerDto {
+public class DeveloperDto {
 	private Long id;
 	@NotBlank
 	@NotNull
 	private String name;
-	private float rating;
-	private int nivel;
-	private int tipo;
 }

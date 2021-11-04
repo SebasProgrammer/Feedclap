@@ -29,20 +29,20 @@ public class User {
 	private int type;
 
 	public User(UserDto userDto) {
-		setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
-		setUsername(userDto.getUsername());
-		setName(userDto.getName());
-		setEmail(userDto.getEmail());
-		setToken(userDto.getToken());
-		setBirthdate(userDto.getBirthdate());
-		setType(userDto.getType());
+		this.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+		this.setUsername(userDto.getUsername());
+		this.setName(userDto.getName());
+		this.setEmail(userDto.getEmail());
+		this.setToken(userDto.getToken());
+		this.setBirthdate(userDto.getBirthdate());
+		this.setType(userDto.getType());
 
 	}
 
 	public void updateFromDto(UserDto userDto) {
-		setUsername(userDto.getUsername());
-		setName(userDto.getName());
-		setEmail(userDto.getEmail());
-		setToken(userDto.getToken());
+		this.setUsername(userDto.getUsername());
+		this.setName(userDto.getName());
+		this.setEmail(userDto.getEmail());
+		this.setToken(userDto.getToken());
 	}
 }
