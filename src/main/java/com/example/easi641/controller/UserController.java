@@ -57,6 +57,8 @@ public class UserController {
 			developerService.createDeveloper(user);
 		} else if (user.getType() == UserType.REVIEWER) {
 			reviewerService.createReviewer(user);
+		} else if (user.getType() == UserType.STAND_ALONE) {
+
 		} else {
 			throw new Exception("UNDEFINED TYPE");
 		}
