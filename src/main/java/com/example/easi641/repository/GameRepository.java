@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
-	@Query(value = "SELECT * FROM games j WHERE g.name = :name", nativeQuery = true)
-	List<Game> getByName(String name);
+	@Query(value = "SELECT * FROM games g WHERE g.name = :name", nativeQuery = true)
+	Game getByName(String name);
 
 	@Query(value = "SELECT description FROM games g WHERE g.name = :name", nativeQuery = true)
 	String getDescription(String name);

@@ -3,6 +3,7 @@ package com.example.easi641.services;
 import com.example.easi641.common.GameValidator;
 import com.example.easi641.dto.GameDto;
 import com.example.easi641.entities.Game;
+import com.example.easi641.entities.Genre;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.*;
@@ -51,7 +52,7 @@ public class GameService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Game> getGamesByName(String gameName) {
+	public Game getGameByName(String gameName) {
 		return gameRepository.getByName(gameName);
 	}
 
@@ -80,6 +81,14 @@ public class GameService {
 		return gamesArray;
 	}
 
+	List<Genre> getGenresByIds(List<Long> genreids) {
+		List<Genre> genresArray = new ArrayList<>();
+		for (Long genreid : genreids) {
+			genresArray.add(genreRepository.getById(genreid));
+		}
+		return genresArray;
+	}
+
 	@Transactional(readOnly = true)
 	public List<Game> getByCategory(String categoryName) {
 		Long categoryId = categoryRepository.getCategoryId(categoryName);
@@ -96,5 +105,14 @@ public class GameService {
 	public List<Game> getByDeveloper(String developerName) {
 		Long desarrolladorId = developerRepository.getDeveloperId(developerName);
 		return getGamesByIds(projectRepository.getGamesByDeveloper(desarrolladorId));
+	}
+
+	@Transactional(readOnly = true)
+	public List<Genre> getGenres_game(String gameName) {
+		Game game=getGameByName(gameName);
+		Long gameid=game.getId();
+		List<Long> generosid=gameGenreRepository.getGenresByGame(gameid);
+		List<Genre> generossss=getGenresByIds(generosid);
+		return generossss;
 	}
 }
