@@ -2,7 +2,9 @@ package com.example.easi641.controller;
 
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.dto.GameDto;
+import com.example.easi641.dto.GenreDto;
 import com.example.easi641.entities.Game;
+import com.example.easi641.entities.Genre;
 import com.example.easi641.services.GameService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,15 +48,21 @@ public class GameController {
 		return new ResponseEntity<>(entityDtoConverter.convertGameToDto(games), HttpStatus.OK);
 	}
 
-	@GetMapping("/genre/{genre}")
+	@GetMapping("/genres/{genre}")
 	public ResponseEntity<List<GameDto>> getByGenre(@PathVariable String genre) {
 		List<Game> games = gameService.getByGenre(genre);
 		return new ResponseEntity<>(entityDtoConverter.convertGameToDto(games), HttpStatus.OK);
 	}
 
+	@GetMapping("/genre/{gameName}")
+	public ResponseEntity<List<GenreDto>> getGenresoftheGame(@PathVariable String gameName) {
+		List<Genre> genres = gameService.getGenres_game(gameName);
+		return new ResponseEntity<>(entityDtoConverter.convertGenreToDto(genres), HttpStatus.OK);
+	}
+
 	@GetMapping("/search/{gameName}")
-	public ResponseEntity<List<GameDto>> findGamesByName(@PathVariable String gameName) {
-		List<Game> games = gameService.getGamesByName(gameName);
+	public ResponseEntity<GameDto> findGameByName(@PathVariable String gameName) {
+		Game games = gameService.getGameByName(gameName);
 		return new ResponseEntity<>(entityDtoConverter.convertGameToDto(games), HttpStatus.OK);
 	}
 

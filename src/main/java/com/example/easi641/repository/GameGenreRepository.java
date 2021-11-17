@@ -14,5 +14,8 @@ public interface GameGenreRepository extends JpaRepository<GameGenre, Long> {
 	@Query(value = "SELECT g.game_id FROM gamegenres g WHERE g.genre_id=:genreId", nativeQuery = true)
 	List<Long> getGamesByGenre(Long genreId);
 
+	@Query(value = "SELECT g.genre_id FROM gamegenres g WHERE g.game_id=:gameId", nativeQuery = true)
+	List<Long> getGenresByGame(Long gameId);
+
 	Optional<GameGenre> findById(Long id);
 }
