@@ -88,4 +88,10 @@ public class GameController {
 		return new ResponseEntity<>(entityDtoConverter.convertGameToDto(games), HttpStatus.OK);
 	}
 
+	@PutMapping("/{gameId}")
+	public ResponseEntity<GameDto> updategame(@PathVariable Long gameId,@Valid @RequestBody GameDto gameDto){
+		gameService.updateGame(gameId,gameDto);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }

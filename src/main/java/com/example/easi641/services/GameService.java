@@ -122,4 +122,15 @@ public class GameService {
 
 		return gameRepository.getgameBykeyword(keyword);
 	}
+
+	@Transactional
+	public void updateGame(Long gameid,GameDto gameDto){
+		Game game=gameRepository.findById(gameid)
+				.orElseThrow(()-> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+		game.setName(gameDto.getName());
+		game.setDescription(gameDto.getDescription());
+		game.setReviewPrice(gameDto.getReviewPrice());
+		game.setDownloadLink(gameDto.getDownloadLink());
+		game.setImg_link(gameDto.getImg_link());
+	}
 }
