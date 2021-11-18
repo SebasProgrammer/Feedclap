@@ -98,13 +98,13 @@ public class UserController {
 	}
 
 	@GetMapping("/login")
-	public ResponseEntity<String> loginUser(@RequestParam String username, @RequestParam String token)
+	public ResponseEntity<Boolean> loginUser(@RequestParam String username, @RequestParam String token)
 			throws Exception {
 		Boolean estado = userService.loginUser(username, token);
 		if (estado == true) {
-			return new ResponseEntity<>(" login correcto ", HttpStatus.OK);
+			return new ResponseEntity<>(true, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(" login incorrecto ", HttpStatus.OK);
+			return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 	}
 
