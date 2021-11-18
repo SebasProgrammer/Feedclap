@@ -19,5 +19,8 @@ public class GameDto {
 	@NotBlank
 	@NotNull
 	private String downloadLink;
+	@NotBlank
+	@NotNull
+	private String img_link;
 
 }

@@ -32,6 +32,9 @@ public class Game {
 	@Column(name = "download_link", nullable = false)
 	private String downloadLink;
 
+	@Column(name = "img_link", nullable = false)
+	private String img_link;
+
 	@OneToMany(mappedBy = "game", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<GameDetail> detailGames; // = new ArrayList<>();
 

@@ -42,7 +42,8 @@ public class GameService {
 	public Game createGame(GameDto gameDto) {
 		GameValidator.validateGame(gameDto);
 		Game game = Game.builder().name(gameDto.getName()).description(gameDto.getDescription())
-				.downloadLink(gameDto.getDownloadLink()).reviewPrice(gameDto.getReviewPrice()).build();
+				.downloadLink(gameDto.getDownloadLink()).reviewPrice(gameDto.getReviewPrice())
+						.img_link(gameDto.getImg_link()).build();
 		return gameRepository.save(game);
 	}
 
