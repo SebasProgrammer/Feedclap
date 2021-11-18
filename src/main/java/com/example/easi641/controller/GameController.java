@@ -66,6 +66,12 @@ public class GameController {
 		return new ResponseEntity<>(entityDtoConverter.convertGameToDto(games), HttpStatus.OK);
 	}
 
+	@GetMapping("/searches/{keyword}")
+	public ResponseEntity<List<GameDto>> findGamesBykeyword(@PathVariable String keyword) {
+		List<Game> games = gameService.getgamesbykeyword(keyword);
+		return new ResponseEntity<>(entityDtoConverter.convertGameToDto(games), HttpStatus.OK);
+	}
+
 	@GetMapping("/descripcion/{gameName}")
 	public ResponseEntity<String> description_Game(@PathVariable String gameName) {
 		return new ResponseEntity<>(gameService.getDescription(gameName), HttpStatus.OK);

@@ -115,4 +115,10 @@ public class GameService {
 		List<Genre> generossss=getGenresByIds(generosid);
 		return generossss;
 	}
+
+	@Transactional(readOnly = true)
+	public List<Game> getgamesbykeyword(String keyword) {
+
+		return gameRepository.getgameBykeyword(keyword);
+	}
 }
