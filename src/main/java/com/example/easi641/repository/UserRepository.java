@@ -11,7 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	@Query(value = "SELECT u.token FROM users u WHERE u.username = :usernamee", nativeQuery = true)
+	//si hay errores cambiar esto
+	@Query(value = "SELECT u.password FROM users u WHERE u.username = :usernamee", nativeQuery = true)
 	Optional<String> getToken(String usernamee);
 
 	@Query(value = "SELECT * FROM users u WHERE u.username = ?1", nativeQuery = true)

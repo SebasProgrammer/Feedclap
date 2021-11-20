@@ -38,7 +38,7 @@ public class ReviewerService {
 	public Reviewer createReviewer(User user) {
 		Reviewer reviewer = new Reviewer();
 		reviewer.setId(user.getId());
-		reviewer.setName(user.getName());
+		//reviewer.setName(user.getName());
 		reviewer.setRating(2.5f);
 		return reviewerRepository.save(reviewer);
 	}

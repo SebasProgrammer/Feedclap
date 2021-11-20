@@ -32,7 +32,7 @@ public class Developer {
 
 	public Developer(User user) {
 		this.setId(user.getId());
-		this.setName(user.getName());
+		//this.setName(user.getName());
 		this.setProjects(new ArrayList<>());
 		this.setRating(2.5f);
 	}

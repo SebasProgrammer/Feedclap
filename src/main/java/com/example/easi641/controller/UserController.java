@@ -50,7 +50,7 @@ public class UserController {
 	@Autowired
 	EntityDtoConverter entityDtoConverter;
 
-	@PostMapping
+	/*@PostMapping
 	public ResponseEntity<String> createUser(@RequestBody UserDto userDto) throws Exception {
 		User user = userService.createUser(userDto);
 		if (user.getType() == UserType.DEVELOPER) {
@@ -64,9 +64,9 @@ public class UserController {
 		}
 		return new ResponseEntity<>(
 				user.getUsername() + " has been saved as type " + UserType.parseType(user.getType()), HttpStatus.OK);
-	}
+	}*/
 
-	@PutMapping
+	/*@PutMapping
 	public ResponseEntity<List<UserDto>> updateUser(@RequestParam String username, @RequestBody UserDto userDto)
 			throws Exception {
 		User user = userService.findUser(username)
@@ -77,13 +77,14 @@ public class UserController {
 		response.add(entityDtoConverter.convertUserToDto(user));
 		userService.updateUser(user, userDto);
 		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+	}*/
 
+	/*
 	@DeleteMapping
 	public ResponseEntity<String> deleteUser(@RequestParam String username) throws FeedclapException {
 		userService.deleteUser(username);
 		return new ResponseEntity<>(username + " deleted succesfully", HttpStatus.OK);
-	}
+	}*/
 
 	@GetMapping
 	public ResponseEntity<List<UserDto>> getResponse() throws FeedclapException {
@@ -97,7 +98,7 @@ public class UserController {
 		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(review), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/login")
+	/*@GetMapping("/login")
 	public ResponseEntity<Boolean> loginUser(@RequestParam String username, @RequestParam String token)
 			throws Exception {
 		Boolean estado = userService.loginUser(username, token);
@@ -106,7 +107,7 @@ public class UserController {
 		} else {
 			return new ResponseEntity<>(false, HttpStatus.OK);
 		}
-	}
+	}*/
 
 	@PostMapping("/follow")
 	public ResponseEntity<String> followSomeone(@RequestParam String follower, @RequestParam String followed)

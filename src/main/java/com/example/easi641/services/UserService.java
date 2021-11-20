@@ -1,19 +1,23 @@
 package com.example.easi641.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.common.UserType;
+import com.example.easi641.common.UserValidator;
+import com.example.easi641.converters.UserConverter;
+import com.example.easi641.dto.LoginRequestDto;
+import com.example.easi641.dto.LoginResponseDto;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
 import com.example.easi641.entities.Following;
 import com.example.easi641.entities.Game;
 import com.example.easi641.entities.Review;
 import com.example.easi641.entities.User;
-import com.example.easi641.exception.ExceptionMessageEnum;
-import com.example.easi641.exception.NotFoundException;
+import com.example.easi641.exception.*;
 import com.example.easi641.repository.DeveloperRepository;
 import com.example.easi641.repository.FollowingRepository;
 import com.example.easi641.repository.GameRepository;
@@ -21,14 +25,22 @@ import com.example.easi641.repository.ReviewRepository;
 import com.example.easi641.repository.ReviewerRepository;
 import com.example.easi641.repository.UserRepository;
 
+import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 public class UserService {
+
+	@Value("${jwt.password}")
+	private String jwtSecret;
 
 	@Autowired
 	private ReviewRepository reviewRepository;
@@ -51,16 +63,33 @@ public class UserService {
 	@Autowired
 	private EntityDtoConverter entityDtoConverter;
 
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public User createUser(UserDto userDto) throws Exception {
-		if (userRepository.countUsername(userDto.getUsername()) != 0) {
-			throw new Exception(userDto.getUsername() + " already in the server");
+	@Autowired
+	private UserConverter userConverter;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Transactional
+	public User createUser(User user) {
+		try {
+			UserValidator.validate(user);
+			User existUser=userRepository.findByUsername(user.getUsername())
+					.orElse(null);
+			if(existUser!=null)
+				throw new IncorrectResourceRequestException("El nombre usuario ya existe");
+
+			String encoder=passwordEncoder.encode(user.getPassword());
+			user.setPassword(encoder);
+
+			return userRepository.save(user);
+		} catch (IncorrectResourceRequestException | ResourceNotFoundException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new GeneralServiceException(e.getMessage(), e);
 		}
-		User newUser = new User(userDto);
-		return userRepository.save(newUser);
 	}
 
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	/*@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User updateUser(User user, UserDto userDto) throws Exception {
 		if (userRepository.countUsername(userDto.getUsername()) != 0) {
 			if (user.getUsername() != userDto.getUsername())
@@ -68,7 +97,7 @@ public class UserService {
 		}
 		user.updateFromDto(userDto);
 		return userRepository.save(user);
-	}
+	}*/
 
 	public void deleteUser(Long id) {
 		userRepository.deleteById(id);
@@ -86,7 +115,7 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 
-	public void deleteUser(String username) {
+	/*public void deleteUser(String username) {
 		User u = userRepository.findByUsername(username)
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
 		if (u.getType() == UserType.REVIEWER) {
@@ -95,7 +124,7 @@ public class UserService {
 			developerRepository.deleteById(u.getId());
 		}
 		userRepository.delete(u);
-	}
+	}*/
 
 	@Transactional
 	public Review createReview(ReviewDto reviewDto) {
@@ -138,14 +167,57 @@ public class UserService {
 		return response;
 	}
 
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public Boolean loginUser(String username, String token) throws Exception {
-		String realToken = userRepository.getToken(username)
-				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
-		if (realToken.equals(token)) {
+	public LoginResponseDto login(LoginRequestDto request){
+		try {
+			User user=userRepository.findByUsername(request.getUsername())
+					.orElseThrow(()->new IncorrectResourceRequestException("Usuario o password incorrecto"));
+
+			if(!passwordEncoder.matches(request.getPassword(),user.getPassword()))
+				throw new IncorrectResourceRequestException("Usuario o password incorrectos");
+
+			String token =createToken(user);
+
+			return new LoginResponseDto(userConverter.fromEntity(user),token);
+
+		} catch (IncorrectResourceRequestException | ResourceNotFoundException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new GeneralServiceException(e.getMessage(), e);
+		}
+	}
+
+	public String createToken(User user){
+		Date now =new Date();
+		Date expiryDate=new Date(now.getTime()+ (1000*60*60));
+
+		return Jwts.builder()
+				.setSubject(user.getUsername())
+				.setIssuedAt(now)
+				.setExpiration(expiryDate)
+				.signWith(SignatureAlgorithm.HS512,jwtSecret).compact();
+	}
+
+	public boolean validateToken(String token) {
+		try {
+			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
 			return true;
-		} else {
-			return false;
+		}catch (UnsupportedJwtException e) {
+			log.error("JWT in a particular format/configuration that does not match the format expected");
+		}catch (MalformedJwtException e) {
+			log.error(" JWT was not correctly constructed and should be rejected");
+		}catch (SignatureException e) {
+			log.error("Signature or verifying an existing signature of a JWT failed");
+		}catch (ExpiredJwtException e) {
+			log.error("JWT was accepted after it expired and must be rejected");
+		}
+		return false;
+	}
+
+	public String getUsernameFromToken(String jwt) {
+		try {
+			return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt).getBody().getSubject();
+		} catch (Exception e) {
+			throw new IncorrectResourceRequestException("Invalid Token");
 		}
 	}
 }
