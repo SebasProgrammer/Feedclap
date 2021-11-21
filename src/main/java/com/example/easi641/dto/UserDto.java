@@ -10,9 +10,9 @@ import java.time.LocalDate;
 public class UserDto {
 	private Long id;
 	private String username;
-	//private String name;
-	//private String email;
-	//private String token;
-	//private int type; // dev rev
-	//private LocalDate birthdate;
+	private String name;
+	private String email;
+	private int type; // dev rev
+	private int nivel;
+	private int exp;
 }

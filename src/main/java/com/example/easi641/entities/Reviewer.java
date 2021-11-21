@@ -18,17 +18,11 @@ public class Reviewer {
 	@Column(name = "id", updatable = false)
 	private Long id;
 
-	@Column(name = "name", nullable = false)
-	private String name;
-
-	@Column(name = "rating", nullable = false)
-	private float rating;
-
-	@Column(name = "nivel", nullable = false)
-	private int nivel;
+	@Column(name = "username", nullable = false)
+	private String username;
 
 	@Column(name = "tipo", nullable = false)
-	private int tipo;
+	private String tipo;
 
 	// List<Reviews>
 	// @OneToMany(mappedBy = "desarrollador", cascade = { CascadeType.PERSIST,

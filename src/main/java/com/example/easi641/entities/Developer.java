@@ -21,20 +21,16 @@ public class Developer {
 	@Column(name = "id", updatable = false)
 	private Long id;
 
-	@Column(name = "name", nullable = false)
-	private String name;
+	@Column(name = "username", nullable = false)
+	private String username;
 
 	@OneToMany(mappedBy = "developer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<Project> projects;
 
-	@Column(name = "rating", nullable = false)
-	private float rating;
-
 	public Developer(User user) {
 		this.setId(user.getId());
-		//this.setName(user.getName());
+		this.setUsername(user.getUsername());
 		this.setProjects(new ArrayList<>());
-		this.setRating(2.5f);
 	}
 
 }

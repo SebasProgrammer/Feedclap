@@ -27,19 +27,11 @@ public class ReviewerService {
 	private UserRepository userRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public Reviewer createReviewer(ReviewerDto reviewerDto) {
-		UserValidator.validateReviewer(reviewerDto);
-		Reviewer reviewer = Reviewer.builder().name(reviewerDto.getName()).build();
-
-		return reviewerRepository.save(reviewer);
-	}
-
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Reviewer createReviewer(User user) {
 		Reviewer reviewer = new Reviewer();
 		reviewer.setId(user.getId());
-		//reviewer.setName(user.getName());
-		reviewer.setRating(2.5f);
+		reviewer.setUsername(user.getUsername());
+		reviewer.setTipo("mortal");
 		return reviewerRepository.save(reviewer);
 	}
 

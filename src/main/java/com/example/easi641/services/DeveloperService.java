@@ -39,14 +39,6 @@ public class DeveloperService {
 	private UserRepository userRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public Developer createDeveloper(DeveloperDto developerDto) {
-		UserValidator.validateDeveloper(developerDto);
-		Developer developer = Developer.builder().name(developerDto.getName()).build();
-
-		return developerRepository.save(developer);
-	}
-
-	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Developer createDeveloper(User user) {
 		Developer developer = new Developer(user);
 		return developerRepository.save(developer);

@@ -12,10 +12,11 @@ public class UserConverter extends  AbstractConverter<User, UserDto> {
         return UserDto.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
-                //.name(entity.getName())
-                //.email(entity.getEmail())
-                //.type(entity.getType())
-                //.birthdate(entity.getBirthdate())
+                .name(entity.getName())
+                .email(entity.getEmail())
+                .type(entity.getType())
+                .nivel(entity.getNivel())
+                .exp(entity.getExp())
                 .build();
     }
 
@@ -25,10 +26,11 @@ public class UserConverter extends  AbstractConverter<User, UserDto> {
         return User.builder()
                 .id(dto.getId())
                 .username(dto.getUsername())
-                //.name(dto.getName())
-                //.email(dto.getEmail())
-                //.type(dto.getType())
-                //.birthdate(dto.getBirthdate())
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .type(dto.getType())
+                .nivel(dto.getNivel())
+                .exp(dto.getExp())
                 .build();
     }
 
@@ -36,10 +38,11 @@ public class UserConverter extends  AbstractConverter<User, UserDto> {
         if(dto == null) return null;
         return User.builder()
                 .username(dto.getUsername())
-                //.name(dto.getName())
-                //.email(dto.getEmail())
-                //.type(dto.getType())
-                //.birthdate(dto.getBirthdate())
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .type(dto.getType())
+                .nivel(dto.getNivel())
+                .exp(dto.getExp())
                 .password(dto.getPassword())
                 .build();
     }

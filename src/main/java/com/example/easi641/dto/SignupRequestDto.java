@@ -12,10 +12,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class SignupRequestDto {
     private String username;
-    //private String name;
-    //private String email;
-    //private String token;
-    //private int type; // dev rev
-    //private LocalDate birthdate;
+    private String name;
+    private String email;
+    private int type; // dev rev
     private String password;
+    private int nivel;
+    private int exp;
 }

@@ -80,7 +80,8 @@ public class UserService {
 
 			String encoder=passwordEncoder.encode(user.getPassword());
 			user.setPassword(encoder);
-
+			user.setNivel(1);
+			user.setExp(0);
 			return userRepository.save(user);
 		} catch (IncorrectResourceRequestException | ResourceNotFoundException e) {
 			throw e;
