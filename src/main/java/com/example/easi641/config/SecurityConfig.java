@@ -64,7 +64,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/login",
                         "/signup",
-                        "/books/latest-books",
+                        "/games",
+                        "/games/search/{gameName}",
+                        "/games/searches/{keyword}",
+                        "/games/genre/{genre}",
                         "/v2/api-docs",
                         "/webjars/**",
                         "/swagger-resources/**"
