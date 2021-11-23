@@ -1,12 +1,10 @@
 package com.example.easi641.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import com.example.easi641.common.EntityDtoConverter;
-import com.example.easi641.common.UserType;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
 import com.example.easi641.entities.Review;
@@ -21,10 +19,8 @@ import com.example.easi641.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,41 +46,13 @@ public class UserController {
 	@Autowired
 	EntityDtoConverter entityDtoConverter;
 
-	/*@PostMapping
-	public ResponseEntity<String> createUser(@RequestBody UserDto userDto) throws Exception {
-		User user = userService.createUser(userDto);
-		if (user.getType() == UserType.DEVELOPER) {
-			developerService.createDeveloper(user);
-		} else if (user.getType() == UserType.REVIEWER) {
-			reviewerService.createReviewer(user);
-		} else if (user.getType() == UserType.STAND_ALONE) {
-
-		} else {
-			throw new Exception("UNDEFINED TYPE");
-		}
-		return new ResponseEntity<>(
-				user.getUsername() + " has been saved as type " + UserType.parseType(user.getType()), HttpStatus.OK);
-	}*/
-
-	/*@PutMapping
-	public ResponseEntity<List<UserDto>> updateUser(@RequestParam String username, @RequestBody UserDto userDto)
-			throws Exception {
-		User user = userService.findUser(username)
-				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
-
-		List<UserDto> response = new ArrayList<UserDto>();
-		response.add(userDto);
-		response.add(entityDtoConverter.convertUserToDto(user));
-		userService.updateUser(user, userDto);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}*/
-
-	/*
-	@DeleteMapping
-	public ResponseEntity<String> deleteUser(@RequestParam String username) throws FeedclapException {
-		userService.deleteUser(username);
-		return new ResponseEntity<>(username + " deleted succesfully", HttpStatus.OK);
-	}*/
+	// @GetMapping
+	// public ResponseEntity<UserDto> getUser(@RequestParam Long userId) throws
+	// FeedclapException {
+	// return new
+	// ResponseEntity<>(entityDtoConverter.convertUserToDto(userService.getAllUsers()),
+	// HttpStatus.OK);
+	// }
 
 	@GetMapping
 	public ResponseEntity<List<UserDto>> getResponse() throws FeedclapException {
@@ -97,17 +65,6 @@ public class UserController {
 		Review review = userService.createReview(reviewDto);
 		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(review), HttpStatus.CREATED);
 	}
-
-	/*@GetMapping("/login")
-	public ResponseEntity<Boolean> loginUser(@RequestParam String username, @RequestParam String token)
-			throws Exception {
-		Boolean estado = userService.loginUser(username, token);
-		if (estado == true) {
-			return new ResponseEntity<>(true, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(false, HttpStatus.OK);
-		}
-	}*/
 
 	@PostMapping("/follow")
 	public ResponseEntity<String> followSomeone(@RequestParam String follower, @RequestParam String followed)

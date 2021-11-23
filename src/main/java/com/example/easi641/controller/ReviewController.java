@@ -2,8 +2,10 @@ package com.example.easi641.controller;
 
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.dto.ReviewDto;
+import com.example.easi641.dto.UserDto;
 import com.example.easi641.entities.Review;
 import com.example.easi641.services.ReviewService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +33,15 @@ public class ReviewController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ReviewDto>> findAllGenres() {
+	public ResponseEntity<List<ReviewDto>> findAllReviews() {
 		List<Review> reviews = reviewService.findAllReviews();
 		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(reviews), HttpStatus.OK);
+	}
+
+	@GetMapping("/reviewer/{reviewId}")
+	public ResponseEntity<UserDto> findReviewerUsername(@PathVariable Long reviewId) {
+		UserDto userDto = entityDtoConverter.convertUserToDto(reviewService.getReviewerNameByReviewId(reviewId));
+		return new ResponseEntity<>(userDto, HttpStatus.OK);
 	}
 
 	@GetMapping("/valor/{reviewId}")

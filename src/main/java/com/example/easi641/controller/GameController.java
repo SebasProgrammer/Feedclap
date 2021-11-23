@@ -1,17 +1,30 @@
 package com.example.easi641.controller;
 
-import com.example.easi641.common.EntityDtoConverter;
-import com.example.easi641.dto.GameDto;
-import com.example.easi641.dto.GenreDto;
-import com.example.easi641.entities.Game;
-import com.example.easi641.entities.Genre;
-import com.example.easi641.services.GameService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 import javax.validation.Valid;
-import java.util.List;
+
+import com.example.easi641.common.EntityDtoConverter;
+import com.example.easi641.dto.CategoryDto;
+import com.example.easi641.dto.GameDto;
+import com.example.easi641.dto.GenreDto;
+import com.example.easi641.dto.ReviewDto;
+import com.example.easi641.entities.Category;
+import com.example.easi641.entities.Game;
+import com.example.easi641.entities.Genre;
+import com.example.easi641.entities.Review;
+import com.example.easi641.services.GameService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/games")
@@ -46,6 +59,18 @@ public class GameController {
 	public ResponseEntity<List<GameDto>> getByCategory(@PathVariable String category) {
 		List<Game> games = gameService.getByCategory(category);
 		return new ResponseEntity<>(entityDtoConverter.convertGameToDto(games), HttpStatus.OK);
+	}
+
+	@GetMapping("/categories/{gameName}")
+	public ResponseEntity<List<CategoryDto>> getCategoriesoftheGame(@PathVariable String gameName) {
+		List<Category> categories = gameService.getCategories_game(gameName);
+		return new ResponseEntity<>(entityDtoConverter.convertCategoryToDto(categories), HttpStatus.OK);
+	}
+
+	@GetMapping("/reviews/{gameName}")
+	public ResponseEntity<List<ReviewDto>> getReviewsByGame(@PathVariable String gameName) {
+		List<Review> reviews = gameService.findReviewsByGame(gameName);
+		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(reviews), HttpStatus.OK);
 	}
 
 	@GetMapping("/genres/{genre}")
@@ -89,8 +114,8 @@ public class GameController {
 	}
 
 	@PutMapping("/{gameId}")
-	public ResponseEntity<GameDto> updategame(@PathVariable Long gameId,@Valid @RequestBody GameDto gameDto){
-		gameService.updateGame(gameId,gameDto);
+	public ResponseEntity<GameDto> updategame(@PathVariable Long gameId, @Valid @RequestBody GameDto gameDto) {
+		gameService.updateGame(gameId, gameDto);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

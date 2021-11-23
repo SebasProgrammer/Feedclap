@@ -55,6 +55,13 @@ public class ReviewService {
 		return reviewCost;
 	}
 
+	@Transactional(readOnly = true)
+	public User getReviewerNameByReviewId(Long reviewId) {
+		Long userId = reviewRepository.getReviewerIdByReview(reviewId);
+		return userRepository.findById(userId)
+				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+	}
+
 	@Transactional
 	public void deleteReview(Long reviewId) {
 		Review review = reviewRepository.findById(reviewId)
