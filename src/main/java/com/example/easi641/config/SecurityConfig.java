@@ -68,6 +68,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/games/search/{gameName}",
                         "/games/searches/{keyword}",
                         "/games/genre/{genre}",
+                        "/users/cant_followers/{username}",
+                        "/users/cant_following/{username}",
+                        "/users/followers/{username}",
+                        "/users/following/{username}",
+                        "/users/cant_games/{username}",
+                        "/users/follow",
+                        "/users",
+                        "/users/{username}",
+                        "/review",
+                        "/review/cant_reviews/{id_user}",
+                        "/review/reviews/{id_user}",
+
                         "/v2/api-docs",
                         "/webjars/**",
                         "/swagger-resources/**"

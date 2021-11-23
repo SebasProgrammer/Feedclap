@@ -23,7 +23,7 @@ public class Review {
 
 	@ManyToOne
 	@JoinColumn(name = "game", updatable = false, nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "juegos_users_fk"))
-	private Game juego;
+	private Game game;
 
 	@Column(name = "description", nullable = false)
 	private String description;
@@ -38,10 +38,11 @@ public class Review {
 	private String state;
 
 	public Review(User user, Game game, ReviewDto reviewDto) {
-		this.setJuego(juego);
+		this.setGame(game);
 		this.setUser(user);
 		this.setDescription(reviewDto.getDescription());
 		this.setRating(reviewDto.getRating());
+		this.setCost(reviewDto.getCost());
 		this.setState(reviewDto.getState());
 	}
 }

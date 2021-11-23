@@ -3,6 +3,7 @@ package com.example.easi641.repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.easi641.entities.Game;
 import com.example.easi641.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,9 +31,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Query(value = "SELECT * FROM users WHERE type=1", nativeQuery = true)
 	List<User> getDevelopers();
 
-	@Query(value = "select follower from following where following=?1", nativeQuery = true)
-	List<Long> getFollowing(Long id);
-
-	@Query(value = "select following from following where follower=?1", nativeQuery = true)
-	List<Long> getFollowers(Long id);
+	@Query(value = "SELECT * FROM users u WHERE u.username = :username", nativeQuery = true)
+	User getByuserName(String username);
 }

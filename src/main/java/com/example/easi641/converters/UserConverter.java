@@ -17,6 +17,8 @@ public class UserConverter extends  AbstractConverter<User, UserDto> {
                 .type(entity.getType())
                 .nivel(entity.getNivel())
                 .exp(entity.getExp())
+                .rank(entity.getRank())
+                .information(entity.getInformation())
                 .build();
     }
 
@@ -31,6 +33,8 @@ public class UserConverter extends  AbstractConverter<User, UserDto> {
                 .type(dto.getType())
                 .nivel(dto.getNivel())
                 .exp(dto.getExp())
+                .rank(dto.getRank())
+                .information(dto.getInformation())
                 .build();
     }
 
@@ -44,6 +48,8 @@ public class UserConverter extends  AbstractConverter<User, UserDto> {
                 .nivel(dto.getNivel())
                 .exp(dto.getExp())
                 .password(dto.getPassword())
+                .rank(dto.getRank())
+                .information(dto.getInformation())
                 .build();
     }
 }

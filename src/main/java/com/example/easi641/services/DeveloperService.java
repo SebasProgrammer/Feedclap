@@ -41,6 +41,7 @@ public class DeveloperService {
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Developer createDeveloper(User user) {
 		Developer developer = new Developer(user);
+		developer.setRating(0.0f);
 		return developerRepository.save(developer);
 	}
 

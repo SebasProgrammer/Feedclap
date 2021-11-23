@@ -61,4 +61,12 @@ public class ReviewService {
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
 		reviewRepository.delete(review);
 	}
+
+	@Transactional(readOnly = true)
+	public List<Review> getreeviews(String username) {
+		User usuario= userRepository.findByUsername(username)
+				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+		List<Review> reviews = reviewRepository.getreviewsbyuser(usuario.getId());
+		return reviews;
+	}
 }

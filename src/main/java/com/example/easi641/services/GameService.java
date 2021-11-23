@@ -4,6 +4,7 @@ import com.example.easi641.common.GameValidator;
 import com.example.easi641.dto.GameDto;
 import com.example.easi641.entities.Game;
 import com.example.easi641.entities.Genre;
+import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.*;
@@ -37,13 +38,15 @@ public class GameService {
 	private GameDetailRepository gameDetailRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private UserRepository userRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Game createGame(GameDto gameDto) {
 		GameValidator.validateGame(gameDto);
 		Game game = Game.builder().name(gameDto.getName()).description(gameDto.getDescription())
 				.downloadLink(gameDto.getDownloadLink()).reviewPrice(gameDto.getReviewPrice())
-						.img_link(gameDto.getImg_link()).build();
+						.img_link(gameDto.getImg_link()).developer_id(gameDto.getDeveloperId()).build();
 		return gameRepository.save(game);
 	}
 

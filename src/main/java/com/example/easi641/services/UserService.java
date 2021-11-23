@@ -52,13 +52,13 @@ public class UserService {
 	private UserRepository userRepository;
 
 	@Autowired
+	private FollowingRepository followingRepository;
+
+	@Autowired
 	private ReviewerRepository reviewerRepository;
 
 	@Autowired
 	private DeveloperRepository developerRepository;
-
-	@Autowired
-	private FollowingRepository followingRepository;
 
 	@Autowired
 	private EntityDtoConverter entityDtoConverter;
@@ -68,6 +68,9 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private GameRepository gameRepository;
 
 	@Transactional
 	public User createUser(User user) {
@@ -82,6 +85,13 @@ public class UserService {
 			user.setPassword(encoder);
 			user.setNivel(1);
 			user.setExp(0);
+			if(user.getType()==1){
+				user.setRank("Desarrollador");
+			}
+			else{
+				user.setRank("Mortal");
+			}
+			user.setInformation("Hola, soy nuevo en FeedClap");
 			return userRepository.save(user);
 		} catch (IncorrectResourceRequestException | ResourceNotFoundException e) {
 			throw e;
@@ -146,24 +156,23 @@ public class UserService {
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public List<UserDto> getFollowers(Long id) throws Exception {
-		List<Long> f = userRepository.getFollowers(id);
-		List<UserDto> response = new ArrayList<UserDto>();
-		for (Long i : f) {
-			response.add(entityDtoConverter.convertUserToDto(userRepository.findById(i)
-					.orElseThrow(() -> new NotFoundException("Some of the follows are incorrect"))));
+	public List<User> getFollowers(String username) throws Exception {
+		List<String> f = followingRepository.getFollowers(username);
+		List<User> response = new ArrayList<>();
+		for (String i : f) {
+			response.add(userRepository.findByUsername(i)
+					.orElseThrow(() -> new NotFoundException("Some of the follows are incorrect")));
 		}
 		return response;
 	}
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public List<UserDto> getFollowing(Long id) throws Exception {
-		List<Long> f = userRepository.getFollowing(id);
-		List<UserDto> response = new ArrayList<UserDto>();
-		for (Long i : f) {
-			response.add(entityDtoConverter.convertUserToDto(userRepository.findById(i)
-					.orElseThrow(() -> new NotFoundException("Some of the follows are incorrect"))));
-
+	public List<User> getFollowing(String username) throws Exception {
+		List<String> f = followingRepository.getFollowing(username);
+		List<User> response = new ArrayList<>();
+		for (String i : f) {
+			response.add(userRepository.findByUsername(i)
+					.orElseThrow(() -> new NotFoundException("Some of the follows are incorrect")));
 		}
 		return response;
 	}
@@ -220,5 +229,16 @@ public class UserService {
 		} catch (Exception e) {
 			throw new IncorrectResourceRequestException("Invalid Token");
 		}
+	}
+
+	public List<Game> getcantgames(String username) {
+		User user=userRepository.getByuserName(username);
+		List<Game> games=gameRepository.getgamesofuser(user.getId());
+		return games;
+	}
+
+	@Transactional(readOnly = true)
+	public User getuserbyusername(String userName) {
+		return userRepository.getByuserName(userName);
 	}
 }

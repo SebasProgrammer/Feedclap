@@ -31,7 +31,6 @@ public class ReviewerService {
 		Reviewer reviewer = new Reviewer();
 		reviewer.setId(user.getId());
 		reviewer.setUsername(user.getUsername());
-		reviewer.setTipo("mortal");
 		return reviewerRepository.save(reviewer);
 	}
 

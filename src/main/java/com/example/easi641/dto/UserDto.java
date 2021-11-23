@@ -15,4 +15,6 @@ public class UserDto {
 	private int type; // dev rev
 	private int nivel;
 	private int exp;
+	private String rank;
+	private String information;
 }

@@ -24,6 +24,9 @@ public class Developer {
 	@Column(name = "username", nullable = false)
 	private String username;
 
+	@Column(name = "rating", nullable = false)
+	private Float rating;
+
 	@OneToMany(mappedBy = "developer", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<Project> projects;
 

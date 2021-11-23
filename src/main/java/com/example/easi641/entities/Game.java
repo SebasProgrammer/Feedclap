@@ -35,6 +35,9 @@ public class Game {
 	@Column(name = "img_link", nullable = false)
 	private String img_link;
 
+	@Column(name = "developer_id", nullable = false)
+	private Long developer_id;
+
 	@OneToMany(mappedBy = "game", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<GameDetail> detailGames; // = new ArrayList<>();
 

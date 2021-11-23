@@ -29,6 +29,16 @@ public class ReviewController {
 		Review review = reviewService.createReview(reviewDto);
 		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(review), HttpStatus.CREATED);
 	}
+	@GetMapping("/reviews/{username}")
+	public ResponseEntity<List<ReviewDto>> getreviews(@PathVariable String username){
+		return new ResponseEntity<>( entityDtoConverter.convertReviewToDto(reviewService.getreeviews(username)), HttpStatus.OK);
+	}
+
+
+	@GetMapping("/cant_reviews/{username}")
+	public ResponseEntity<Integer> getcantreviews(@PathVariable String username){
+		return new ResponseEntity<>( reviewService.getreeviews(username).size(), HttpStatus.OK);
+	}
 
 	@GetMapping
 	public ResponseEntity<List<ReviewDto>> findAllGenres() {
