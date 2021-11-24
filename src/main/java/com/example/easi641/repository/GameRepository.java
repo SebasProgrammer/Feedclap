@@ -21,4 +21,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 	@Query(value = "SELECT * FROM games g WHERE g.name LIKE %:keyword%", nativeQuery = true)
 	List<Game> getgameBykeyword(String keyword);
 
+	@Query(value = "SELECT * FROM games g WHERE g.developer_id = :userid", nativeQuery = true)
+	List<Game> getgamesofuser(Long userid);
+
 }

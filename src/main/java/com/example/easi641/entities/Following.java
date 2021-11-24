@@ -18,13 +18,15 @@ public class Following {
 	@Column(name = "id", updatable = false)
 	private Long id;
 
-	private Long follower;
+	@Column(name = "follower")
+	private String follower;
 
-	private Long following;
+	@Column(name = "following")
+	private String following;
 
 	public Following(User er, User ing) {
-		this.setFollower(er.getId());
-		this.setFollowing(ing.getId());
+		this.setFollower(er.getUsername());
+		this.setFollowing(ing.getUsername());
 	}
 
 }

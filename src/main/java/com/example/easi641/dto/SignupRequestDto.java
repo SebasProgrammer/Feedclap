@@ -18,4 +18,6 @@ public class SignupRequestDto {
     private String password;
     private int nivel;
     private int exp;
+    private String rank;
+    private String information;
 }

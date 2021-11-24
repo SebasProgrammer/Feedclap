@@ -1,10 +1,15 @@
 package com.example.easi641.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import com.example.easi641.common.EntityDtoConverter;
+import com.example.easi641.common.UserType;
+import com.example.easi641.converters.UserConverter;
+import com.example.easi641.dto.FollowingDto;
+import com.example.easi641.dto.GameDto;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
 import com.example.easi641.entities.Review;
@@ -19,13 +24,7 @@ import com.example.easi641.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -46,6 +45,9 @@ public class UserController {
 	@Autowired
 	EntityDtoConverter entityDtoConverter;
 
+	@Autowired
+	UserConverter userConverter;
+
 	// @GetMapping
 	// public ResponseEntity<UserDto> getUser(@RequestParam Long userId) throws
 	// FeedclapException {
@@ -53,6 +55,12 @@ public class UserController {
 	// ResponseEntity<>(entityDtoConverter.convertUserToDto(userService.getAllUsers()),
 	// HttpStatus.OK);
 	// }
+
+	@GetMapping("/{username}")
+	public ResponseEntity<UserDto> getuser(@PathVariable String username){
+		User user=userService.getuserbyusername(username);
+		return new ResponseEntity<>(userConverter.fromEntity(user), HttpStatus.OK);
+	}
 
 	@GetMapping
 	public ResponseEntity<List<UserDto>> getResponse() throws FeedclapException {
@@ -67,34 +75,47 @@ public class UserController {
 	}
 
 	@PostMapping("/follow")
-	public ResponseEntity<String> followSomeone(@RequestParam String follower, @RequestParam String followed)
+	public ResponseEntity<String> followSomeone(@Valid @RequestBody FollowingDto followingDto)
 			throws Exception {
 
-		User userFollowed = userService.findUser(followed)
+
+		User userFollowed = userService.findUser(followingDto.getFollowing())
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
 
-		User userFollower = userService.findUser(follower)
+		User userFollower = userService.findUser(followingDto.getFollower())
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
 
 		userService.mkFollow(userFollower, userFollowed);
-		return new ResponseEntity<>(follower + " is now followed " + followed, HttpStatus.OK);
+		return new ResponseEntity<>(followingDto.getFollower() + " is now followed " + followingDto.getFollowing(), HttpStatus.OK);
 	}
 
-	@PostMapping("/following")
-	public ResponseEntity<List<UserDto>> getFollowing(@RequestParam String username) throws Exception {
+	@GetMapping("/following/{username}")
+	public ResponseEntity<List<UserDto>> getFollowing(@PathVariable String username) throws Exception {
 
-		User user = userService.findUser(username)
-				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
-
-		return new ResponseEntity<>(userService.getFollowing(user.getId()), HttpStatus.OK);
+		return new ResponseEntity<>(userConverter.fromEntity(userService.getFollowing(username)), HttpStatus.OK);
 	}
 
-	@PostMapping("/followers")
-	public ResponseEntity<List<UserDto>> getFollowers(@RequestParam String username) throws Exception {
+	@GetMapping("/followers/{username}")
+	public ResponseEntity<List<UserDto>> getFollowers(@PathVariable String username) throws Exception {
 
-		User user = userService.findUser(username)
-				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+		return new ResponseEntity<>(userConverter.fromEntity(userService.getFollowers(username)), HttpStatus.OK);
+	}
 
-		return new ResponseEntity<>(userService.getFollowers(user.getId()), HttpStatus.OK);
+	@GetMapping("/cant_following/{username}")
+	public ResponseEntity<Integer> getcantFollowing(@PathVariable String username) throws Exception {
+
+		return new ResponseEntity<>(userService.getFollowing(username).size(), HttpStatus.OK);
+	}
+
+	@GetMapping("/cant_followers/{username}")
+	public ResponseEntity<Integer> getcant_Followers(@PathVariable String username) throws Exception {
+
+		return new ResponseEntity<>(userService.getFollowers(username).size(), HttpStatus.OK);
+	}
+
+	@GetMapping("/cant_games/{username}")
+	public ResponseEntity<Integer> getcant_games(@PathVariable String username) throws Exception {
+
+		return new ResponseEntity<>(userService.getcantgames(username).size(), HttpStatus.OK);
 	}
 }

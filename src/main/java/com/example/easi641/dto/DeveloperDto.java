@@ -11,4 +11,5 @@ public class DeveloperDto {
 	@NotBlank
 	@NotNull
 	private String name;
+	private Float rating;
 }

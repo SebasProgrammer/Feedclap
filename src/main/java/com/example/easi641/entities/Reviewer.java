@@ -21,9 +21,6 @@ public class Reviewer {
 	@Column(name = "username", nullable = false)
 	private String username;
 
-	@Column(name = "tipo", nullable = false)
-	private String tipo;
-
 	// List<Reviews>
 	// @OneToMany(mappedBy = "desarrollador", cascade = { CascadeType.PERSIST,
 	// CascadeType.REMOVE }, fetch = FetchType.LAZY)

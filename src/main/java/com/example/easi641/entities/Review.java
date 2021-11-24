@@ -1,21 +1,13 @@
 package com.example.easi641.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.example.easi641.dto.ReviewDto;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+import com.example.easi641.dto.ReviewDto;
 
 @Entity
 @Table(name = "reviews")
@@ -54,6 +46,7 @@ public class Review {
 		this.setUser(user);
 		this.setDescription(reviewDto.getDescription());
 		this.setRating(reviewDto.getRating());
+		this.setCost(reviewDto.getCost());
 		this.setState(reviewDto.getState());
 	}
 }

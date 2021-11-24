@@ -18,4 +18,5 @@ public class ReviewDto {
 	@NotBlank
 	@NotNull
 	private String state;
+	private Float cost;
 }

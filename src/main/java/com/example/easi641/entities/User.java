@@ -25,15 +25,22 @@ public class User {
 	private Long id;
 	@Column(name="username",length = 30,nullable = false)
 	private String username;
+	@Column(name="name")
 	private String name;
+	@Column(name="email")
 	private String email;
 	@Column(name="password",length = 150,nullable = false)
 	private String password;
+	@Column(name="type")
 	private int type;
 	@Column(name = "nivel", nullable = false)
 	private int nivel;
 	@Column(name = "exp", nullable = false)
 	private int exp;
+	@Column(name = "rankk")
+	private String rankk;
+	@Column(name = "informationn")
+	private String informationn;
 
 	/*public User(UserDto userDto) {
 		this.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);

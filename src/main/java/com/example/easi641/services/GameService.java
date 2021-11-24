@@ -2,10 +2,7 @@ package com.example.easi641.services;
 
 import com.example.easi641.common.GameValidator;
 import com.example.easi641.dto.GameDto;
-import com.example.easi641.entities.Category;
-import com.example.easi641.entities.Game;
-import com.example.easi641.entities.Genre;
-import com.example.easi641.entities.Review;
+import com.example.easi641.entities.*;
 import com.example.easi641.exception.ExceptionMessageEnum;
 import com.example.easi641.exception.NotFoundException;
 import com.example.easi641.repository.*;
@@ -31,9 +28,6 @@ public class GameService {
 	private GameGenreRepository gameGenreRepository;
 
 	@Autowired
-	private ReviewRepository reviewRepository;
-
-	@Autowired
 	private GenreRepository genreRepository;
 
 	@Autowired
@@ -42,13 +36,17 @@ public class GameService {
 	private GameDetailRepository gameDetailRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private ReviewRepository reviewRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Game createGame(GameDto gameDto) {
 		GameValidator.validateGame(gameDto);
 		Game game = Game.builder().name(gameDto.getName()).description(gameDto.getDescription())
 				.downloadLink(gameDto.getDownloadLink()).reviewPrice(gameDto.getReviewPrice())
-				.img_link(gameDto.getImg_link()).build();
+				.img_link(gameDto.getImg_link()).developer_id(gameDto.getDeveloperId()).build();
 		return gameRepository.save(game);
 	}
 
@@ -87,11 +85,6 @@ public class GameService {
 		return gamesArray;
 	}
 
-	@Transactional(readOnly = true)
-	public List<Review> findReviewsByGame(String gameName) {
-		return reviewRepository.getReviewsByGame(gameRepository.getByName(gameName).getId());
-	}
-
 	List<Genre> getGenresByIds(List<Long> genreids) {
 		List<Genre> genresArray = new ArrayList<>();
 		for (Long genreid : genreids) {
@@ -100,27 +93,10 @@ public class GameService {
 		return genresArray;
 	}
 
-	List<Category> getCategoriesByIds(List<Long> cateogoriesId) {
-		List<Category> genresArray = new ArrayList<>();
-		for (Long categoryid : cateogoriesId) {
-			genresArray.add(categoryRepository.getById(categoryid));
-		}
-		return genresArray;
-	}
-
 	@Transactional(readOnly = true)
 	public List<Game> getByCategory(String categoryName) {
 		Long categoryId = categoryRepository.getCategoryId(categoryName);
 		return getGamesByIds(gameDetailRepository.getGamesByCategory(categoryId));
-	}
-
-	@Transactional(readOnly = true)
-	public List<Category> getCategories_game(String gameName) {
-		Game game = getGameByName(gameName);
-		Long gameid = game.getId();
-		List<Long> cateogoriesId = categoryRepository.getCategoriesByGame(gameid);
-		List<Category> categories = getCategoriesByIds(cateogoriesId);
-		return categories;
 	}
 
 	@Transactional(readOnly = true)
@@ -159,5 +135,27 @@ public class GameService {
 		game.setReviewPrice(gameDto.getReviewPrice());
 		game.setDownloadLink(gameDto.getDownloadLink());
 		game.setImg_link(gameDto.getImg_link());
+	}
+
+	@Transactional(readOnly = true)
+	public List<Review> findReviewsByGame(String gameName) {
+		return reviewRepository.getReviewsByGame(gameRepository.getByName(gameName).getId());
+	}
+
+	List<Category> getCategoriesByIds(List<Long> cateogoriesId) {
+		List<Category> genresArray = new ArrayList<>();
+		for (Long categoryid : cateogoriesId) {
+			genresArray.add(categoryRepository.getById(categoryid));
+		}
+		return genresArray;
+	}
+
+	@Transactional(readOnly = true)
+	public List<Category> getCategories_game(String gameName) {
+		Game game = getGameByName(gameName);
+		Long gameid = game.getId();
+		List<Long> cateogoriesId = categoryRepository.getCategoriesByGame(gameid);
+		List<Category> categories = getCategoriesByIds(cateogoriesId);
+		return categories;
 	}
 }
