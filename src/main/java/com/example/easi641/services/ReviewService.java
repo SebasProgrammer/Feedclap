@@ -72,8 +72,13 @@ public class ReviewService {
 
 	@Transactional(readOnly = true)
 	public User getReviewerNameByReviewId(Long reviewId) {
-		Long userId = reviewRepository.getReviewerIdByReview(reviewId);
-		return userRepository.findById(userId)
+		return userRepository.findById(reviewId)
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
+	}
+
+	@Transactional(readOnly = true)
+	public Review getreviewbyidddd(Long reviewId) {
+		Review review=reviewRepository.getById(reviewId);
+		return review;
 	}
 }

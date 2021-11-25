@@ -13,6 +13,7 @@ import com.example.easi641.dto.FollowingDto;
 import com.example.easi641.dto.GameDto;
 import com.example.easi641.dto.ReviewDto;
 import com.example.easi641.dto.UserDto;
+import com.example.easi641.entities.Game;
 import com.example.easi641.entities.Review;
 import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
@@ -62,6 +63,12 @@ public class UserController {
 	@GetMapping("/{username}")
 	public ResponseEntity<UserDto> getuser(@PathVariable String username) {
 		User user = userService.getuserbyusername(username);
+		return new ResponseEntity<>(userConverter.fromEntity(user), HttpStatus.OK);
+	}
+
+	@GetMapping("/idddd/{userid}")
+	public ResponseEntity<UserDto> getuserbyid(@PathVariable Long userid){
+		User user=userService.getuserbyid(userid);
 		return new ResponseEntity<>(userConverter.fromEntity(user), HttpStatus.OK);
 	}
 
@@ -121,8 +128,20 @@ public class UserController {
 		return new ResponseEntity<>(userService.getcantgames(username).size(), HttpStatus.OK);
 	}
 
+
 	@GetMapping("/activity/{username}")
 	public ResponseEntity<List<ActivityReportDto>> get_user_activity(@PathVariable String username) throws Exception {
 		return new ResponseEntity<>(userService.getActivityReport(username), HttpStatus.OK);
+  }
+	@GetMapping("/list_games/{username}")
+	public ResponseEntity<List<Game>> getlist_games(@PathVariable String username) throws Exception {
+
+		return new ResponseEntity<>(userService.getcantgames(username), HttpStatus.OK);
+	}
+
+	@PutMapping("/{userid}")
+	public ResponseEntity<String> updateuser(@PathVariable Long userid, @Valid @RequestBody UserDto userDto) {
+		userService.updateuser(userid, userDto);
+		return new ResponseEntity<>("se actualizo correcto",HttpStatus.OK);
 	}
 }

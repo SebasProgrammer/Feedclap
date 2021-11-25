@@ -49,6 +49,6 @@ public class Game {
 	@OneToMany(mappedBy = "game", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<GameDetail> detailGames; // = new ArrayList<>();
 
-	@OneToMany(mappedBy = "game", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
-	private List<GameGenre> gameGenres; // = new ArrayList<>();
+	//@OneToMany(mappedBy = "game", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
+	//private List<GameGenre> gameGenres; // = new ArrayList<>();
 }

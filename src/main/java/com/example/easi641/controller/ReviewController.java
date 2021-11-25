@@ -64,4 +64,10 @@ public class ReviewController {
 		UserDto userDto = entityDtoConverter.convertUserToDto(reviewService.getReviewerNameByReviewId(reviewId));
 		return new ResponseEntity<>(userDto, HttpStatus.OK);
 	}
+
+	@GetMapping("/{review_id}")
+	public ResponseEntity<ReviewDto> getreviewbyid(@PathVariable Long review_id) {
+		Review review = reviewService.getreviewbyidddd(review_id);
+		return new ResponseEntity<>(entityDtoConverter.convertReviewToDto(review), HttpStatus.OK);
+	}
 }
