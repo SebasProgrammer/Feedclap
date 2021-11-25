@@ -37,8 +37,6 @@ public class GameService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired
-	private UserRepository userRepository;
-	@Autowired
 	private ReviewRepository reviewRepository;
 
 	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
@@ -46,7 +44,7 @@ public class GameService {
 		GameValidator.validateGame(gameDto);
 		Game game = Game.builder().name(gameDto.getName()).description(gameDto.getDescription())
 				.downloadLink(gameDto.getDownloadLink()).reviewPrice(gameDto.getReviewPrice())
-				.img_link(gameDto.getImg_link()).developer_id(gameDto.getDeveloperId()).build();
+				.img_link(gameDto.getImg_link()).developer_id(gameDto.getDeveloperId()).date(gameDto.getDate()).build();
 		return gameRepository.save(game);
 	}
 

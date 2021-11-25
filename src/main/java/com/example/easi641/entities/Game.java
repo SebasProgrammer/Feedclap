@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.Length;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class Game {
 	@Column(name = "download_link", nullable = false)
 	private String downloadLink;
 
+	@Length(max = 2048)
 	@Column(name = "img_link", nullable = false)
 	private String img_link;
 
