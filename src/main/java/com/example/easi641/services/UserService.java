@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.common.UserType;
 import com.example.easi641.common.UserValidator;
 import com.example.easi641.converters.UserConverter;
@@ -253,7 +252,7 @@ public class UserService {
 	}
 
 	public void updateuser(Long userid, UserDto userDto) {
-		User user =userRepository.getById(userid);
+		User user = userRepository.getById(userid);
 		user.setInformationn(userDto.getInformation());
 		user.setRankk(userDto.getRank());
 		user.setExp(userDto.getExp());

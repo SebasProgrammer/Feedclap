@@ -2,8 +2,6 @@ package com.example.easi641.services;
 
 import java.util.List;
 
-import com.example.easi641.common.UserValidator;
-import com.example.easi641.dto.ReviewerDto;
 import com.example.easi641.entities.Reviewer;
 import com.example.easi641.entities.User;
 import com.example.easi641.exception.ExceptionMessageEnum;
