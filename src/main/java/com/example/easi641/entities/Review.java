@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 import javax.persistence.*;
 
 import com.example.easi641.dto.ReviewDto;
@@ -41,6 +43,9 @@ public class Review {
 	@Column(name = "state", nullable = false)
 	private String state;
 
+	@Column(name = "date", nullable = false)
+	private LocalDate date;
+
 	public Review(User user, Game game, ReviewDto reviewDto) {
 		this.setGame(game);
 		this.setUser(user);
@@ -48,5 +53,6 @@ public class Review {
 		this.setRating(reviewDto.getRating());
 		this.setCost(reviewDto.getCost());
 		this.setState(reviewDto.getState());
+		this.setDate(reviewDto.getDate());
 	}
 }

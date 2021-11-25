@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -37,6 +39,9 @@ public class Game {
 
 	@Column(name = "developer_id", nullable = false)
 	private Long developer_id;
+
+	@Column(name = "date", nullable = false)
+	private LocalDate date;
 
 	@OneToMany(mappedBy = "game", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<GameDetail> detailGames; // = new ArrayList<>();

@@ -8,19 +8,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class ReviewDto {
+public class ActivityReportDto {
 	private Long id;
-	private Long userId;
-	private Long gameId;
 	@NotBlank
-	@NotNull
-	private String description;
-	@NotNull
-	private Integer rating;
-	@NotBlank
-	@NotNull
-	private String state;
-	private Float cost;
 	@NotNull
 	private LocalDate date;
 }
