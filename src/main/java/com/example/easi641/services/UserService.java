@@ -9,10 +9,7 @@ import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.common.UserType;
 import com.example.easi641.common.UserValidator;
 import com.example.easi641.converters.UserConverter;
-import com.example.easi641.dto.LoginRequestDto;
-import com.example.easi641.dto.LoginResponseDto;
-import com.example.easi641.dto.ReviewDto;
-import com.example.easi641.dto.UserDto;
+import com.example.easi641.dto.*;
 import com.example.easi641.entities.Following;
 import com.example.easi641.entities.Game;
 import com.example.easi641.entities.Review;
@@ -240,5 +237,20 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public User getuserbyusername(String userName) {
 		return userRepository.getByuserName(userName);
+	}
+
+	@Transactional(readOnly = true)
+	public User getuserbyid(Long userid) {
+		return userRepository.getById(userid);
+	}
+
+	public void updateuser(Long userid, UserDto userDto) {
+		User user =userRepository.getById(userid);
+		user.setInformationn(userDto.getInformation());
+		user.setRankk(userDto.getRank());
+		user.setExp(userDto.getExp());
+		user.setNivel(userDto.getNivel());
+		user.setName(userDto.getName());
+		userRepository.save(user);
 	}
 }
