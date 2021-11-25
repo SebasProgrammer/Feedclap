@@ -2,6 +2,8 @@ package com.example.easi641.dto;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -23,4 +25,6 @@ public class GameDto {
 	@NotNull
 	private String img_link;
 	private Long developerId;
+	@NotNull
+	private LocalDate date;
 }

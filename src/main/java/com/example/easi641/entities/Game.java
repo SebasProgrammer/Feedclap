@@ -6,6 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import org.hibernate.validator.constraints.Length;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -32,11 +36,15 @@ public class Game {
 	@Column(name = "download_link", nullable = false)
 	private String downloadLink;
 
+	@Length(max = 2048)
 	@Column(name = "img_link", nullable = false)
 	private String img_link;
 
 	@Column(name = "developer_id", nullable = false)
 	private Long developer_id;
+
+	@Column(name = "date", nullable = false)
+	private LocalDate date;
 
 	@OneToMany(mappedBy = "game", cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	private List<GameDetail> detailGames; // = new ArrayList<>();

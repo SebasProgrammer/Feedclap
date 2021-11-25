@@ -9,7 +9,13 @@ import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.common.UserType;
 import com.example.easi641.common.UserValidator;
 import com.example.easi641.converters.UserConverter;
-import com.example.easi641.dto.*;
+
+import com.example.easi641.dto.ActivityReportDto;
+import com.example.easi641.dto.LoginRequestDto;
+import com.example.easi641.dto.LoginResponseDto;
+import com.example.easi641.dto.ReviewDto;
+import com.example.easi641.dto.UserDto;
+
 import com.example.easi641.entities.Following;
 import com.example.easi641.entities.Game;
 import com.example.easi641.entities.Review;
@@ -58,9 +64,6 @@ public class UserService {
 	private DeveloperRepository developerRepository;
 
 	@Autowired
-	private EntityDtoConverter entityDtoConverter;
-
-	@Autowired
 	private UserConverter userConverter;
 
 	@Autowired
@@ -73,19 +76,17 @@ public class UserService {
 	public User createUser(User user) {
 		try {
 			UserValidator.validate(user);
-			User existUser=userRepository.findByUsername(user.getUsername())
-					.orElse(null);
-			if(existUser!=null)
+			User existUser = userRepository.findByUsername(user.getUsername()).orElse(null);
+			if (existUser != null)
 				throw new IncorrectResourceRequestException("El nombre usuario ya existe");
 
-			String encoder=passwordEncoder.encode(user.getPassword());
+			String encoder = passwordEncoder.encode(user.getPassword());
 			user.setPassword(encoder);
 			user.setNivel(1);
 			user.setExp(0);
-			if(user.getType()==1){
+			if (user.getType() == 1) {
 				user.setRankk("Desarrollador");
-			}
-			else{
+			} else {
 				user.setRankk("Mortal");
 			}
 			user.setInformationn("Hola, soy nuevo en FeedClap");
@@ -97,15 +98,26 @@ public class UserService {
 		}
 	}
 
-	/*@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public User updateUser(User user, UserDto userDto) throws Exception {
-		if (userRepository.countUsername(userDto.getUsername()) != 0) {
-			if (user.getUsername() != userDto.getUsername())
-				throw new Exception(userDto.getUsername() + " already in the server");
+	@Transactional
+	public List<ActivityReportDto> getActivityReport(String username) {
+		User user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("User not found."));
+		if (user.getType() == UserType.REVIEWER) {
+			return reviewerRepository.getActivityReport(user.getId());
+		} else if (user.getType() == UserType.DEVELOPER) {
+			return developerRepository.getActivityReport(user.getId());
 		}
-		user.updateFromDto(userDto);
-		return userRepository.save(user);
-	}*/
+		throw new NotFoundException("User not found.");
+
+	}
+
+	/*
+	 * @Transactional(isolation = Isolation.READ_COMMITTED, propagation =
+	 * Propagation.REQUIRED) public User updateUser(User user, UserDto userDto)
+	 * throws Exception { if (userRepository.countUsername(userDto.getUsername()) !=
+	 * 0) { if (user.getUsername() != userDto.getUsername()) throw new
+	 * Exception(userDto.getUsername() + " already in the server"); }
+	 * user.updateFromDto(userDto); return userRepository.save(user); }
+	 */
 
 	public void deleteUser(Long id) {
 		userRepository.deleteById(id);
@@ -123,16 +135,15 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 
-	/*public void deleteUser(String username) {
-		User u = userRepository.findByUsername(username)
-				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
-		if (u.getType() == UserType.REVIEWER) {
-			reviewerRepository.deleteById(u.getId());
-		} else if (u.getType() == UserType.DEVELOPER) {
-			developerRepository.deleteById(u.getId());
-		}
-		userRepository.delete(u);
-	}*/
+	/*
+	 * public void deleteUser(String username) { User u =
+	 * userRepository.findByUsername(username) .orElseThrow(() -> new
+	 * NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage())); if
+	 * (u.getType() == UserType.REVIEWER) {
+	 * reviewerRepository.deleteById(u.getId()); } else if (u.getType() ==
+	 * UserType.DEVELOPER) { developerRepository.deleteById(u.getId()); }
+	 * userRepository.delete(u); }
+	 */
 
 	@Transactional
 	public Review createReview(ReviewDto reviewDto) {
@@ -174,17 +185,17 @@ public class UserService {
 		return response;
 	}
 
-	public LoginResponseDto login(LoginRequestDto request){
+	public LoginResponseDto login(LoginRequestDto request) {
 		try {
-			User user=userRepository.findByUsername(request.getUsername())
-					.orElseThrow(()->new IncorrectResourceRequestException("Usuario o password incorrecto"));
+			User user = userRepository.findByUsername(request.getUsername())
+					.orElseThrow(() -> new IncorrectResourceRequestException("Usuario o password incorrecto"));
 
-			if(!passwordEncoder.matches(request.getPassword(),user.getPassword()))
+			if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
 				throw new IncorrectResourceRequestException("Usuario o password incorrectos");
 
-			String token =createToken(user);
+			String token = createToken(user);
 
-			return new LoginResponseDto(userConverter.fromEntity(user),token);
+			return new LoginResponseDto(userConverter.fromEntity(user), token);
 
 		} catch (IncorrectResourceRequestException | ResourceNotFoundException e) {
 			throw e;
@@ -193,28 +204,25 @@ public class UserService {
 		}
 	}
 
-	public String createToken(User user){
-		Date now =new Date();
-		Date expiryDate=new Date(now.getTime()+ (1000*60*60));
+	public String createToken(User user) {
+		Date now = new Date();
+		Date expiryDate = new Date(now.getTime() + (1000 * 60 * 60));
 
-		return Jwts.builder()
-				.setSubject(user.getUsername())
-				.setIssuedAt(now)
-				.setExpiration(expiryDate)
-				.signWith(SignatureAlgorithm.HS512,jwtSecret).compact();
+		return Jwts.builder().setSubject(user.getUsername()).setIssuedAt(now).setExpiration(expiryDate)
+				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
 	public boolean validateToken(String token) {
 		try {
 			Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
 			return true;
-		}catch (UnsupportedJwtException e) {
+		} catch (UnsupportedJwtException e) {
 			log.error("JWT in a particular format/configuration that does not match the format expected");
-		}catch (MalformedJwtException e) {
+		} catch (MalformedJwtException e) {
 			log.error(" JWT was not correctly constructed and should be rejected");
-		}catch (SignatureException e) {
+		} catch (SignatureException e) {
 			log.error("Signature or verifying an existing signature of a JWT failed");
-		}catch (ExpiredJwtException e) {
+		} catch (ExpiredJwtException e) {
 			log.error("JWT was accepted after it expired and must be rejected");
 		}
 		return false;
@@ -229,8 +237,8 @@ public class UserService {
 	}
 
 	public List<Game> getcantgames(String username) {
-		User user=userRepository.getByuserName(username);
-		List<Game> games=gameRepository.getgamesofuser(user.getId());
+		User user = userRepository.getByuserName(username);
+		List<Game> games = gameRepository.getgamesofuser(user.getId());
 		return games;
 	}
 

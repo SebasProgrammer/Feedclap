@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import com.example.easi641.common.EntityDtoConverter;
 import com.example.easi641.common.UserType;
 import com.example.easi641.converters.UserConverter;
+import com.example.easi641.dto.ActivityReportDto;
 import com.example.easi641.dto.FollowingDto;
 import com.example.easi641.dto.GameDto;
 import com.example.easi641.dto.ReviewDto;
@@ -26,6 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import ch.qos.logback.core.joran.action.Action;
 
 @RestController
 @RequestMapping("/users")
@@ -58,8 +61,8 @@ public class UserController {
 	// }
 
 	@GetMapping("/{username}")
-	public ResponseEntity<UserDto> getuser(@PathVariable String username){
-		User user=userService.getuserbyusername(username);
+	public ResponseEntity<UserDto> getuser(@PathVariable String username) {
+		User user = userService.getuserbyusername(username);
 		return new ResponseEntity<>(userConverter.fromEntity(user), HttpStatus.OK);
 	}
 
@@ -82,9 +85,7 @@ public class UserController {
 	}
 
 	@PostMapping("/follow")
-	public ResponseEntity<String> followSomeone(@Valid @RequestBody FollowingDto followingDto)
-			throws Exception {
-
+	public ResponseEntity<String> followSomeone(@Valid @RequestBody FollowingDto followingDto) throws Exception {
 
 		User userFollowed = userService.findUser(followingDto.getFollowing())
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
@@ -93,7 +94,8 @@ public class UserController {
 				.orElseThrow(() -> new NotFoundException(ExceptionMessageEnum.NOT_FOUND.getMessage()));
 
 		userService.mkFollow(userFollower, userFollowed);
-		return new ResponseEntity<>(followingDto.getFollower() + " is now followed " + followingDto.getFollowing(), HttpStatus.OK);
+		return new ResponseEntity<>(followingDto.getFollower() + " is now followed " + followingDto.getFollowing(),
+				HttpStatus.OK);
 	}
 
 	@GetMapping("/following/{username}")
@@ -126,6 +128,11 @@ public class UserController {
 		return new ResponseEntity<>(userService.getcantgames(username).size(), HttpStatus.OK);
 	}
 
+
+	@GetMapping("/activity/{username}")
+	public ResponseEntity<List<ActivityReportDto>> get_user_activity(@PathVariable String username) throws Exception {
+		return new ResponseEntity<>(userService.getActivityReport(username), HttpStatus.OK);
+  }
 	@GetMapping("/list_games/{username}")
 	public ResponseEntity<List<Game>> getlist_games(@PathVariable String username) throws Exception {
 
